@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "rppdapp",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/home/lenkorichard/projects/private/rppd-app/amplify/backend/api/rppdapp/schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authrppdapp8eb422af"
+      }
+    ]
+  }
+}
