@@ -2,19 +2,23 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import { Amplify, API, Auth, withSSRContext } from "aws-amplify";
 import Head from "next/head";
 import awsExports from "../src/aws-exports";
-import { createPost } from "../src/graphql/mutations";
-import { listPosts } from "../src/graphql/queries";
+import {
+  createWorkout,
+  createSet,
+  createExcercise,
+} from "../src/graphql/mutations";
+import { listWorkouts } from "../src/graphql/queries";
 import styles from "../styles/Home.module.css";
 
 Amplify.configure({ ...awsExports, ssr: true });
 
 export async function getServerSideProps({ req }) {
   const SSR = withSSRContext({ req });
-  const response = await SSR.API.graphql({ query: listPosts });
+  const response = await SSR.API.graphql({ query: listWorkouts });
 
   return {
     props: {
-      posts: response.data.listPosts.items,
+      workouts: response.data.listWorkouts.items,
     },
   };
 }
@@ -25,26 +29,55 @@ async function handleCreatePost(event) {
   const form = new FormData(event.target);
 
   try {
-    const { data } = await API.graphql({
+    const workoutData = await API.graphql({
       authMode: "AMAZON_COGNITO_USER_POOLS",
-      query: createPost,
+      query: createWorkout,
       variables: {
         input: {
           title: form.get("title"),
-          content: form.get("content"),
-          priority: form.get("priority"),
+          video: form.get("video"),
+          rules: [form.get("rules")],
         },
       },
     });
+    const excData = await API.graphql({
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+      query: createExcercise,
+      variables: {
+        input: {
+          workoutExcercisesId: workoutData.data.createWorkout.id,
+          title: "Excercise title",
+          description: "A Description for the excercise",
+          time: 120,
+        },
+      },
+    });
+    console.log("Excercise Created");
 
-    window.location.href = `/posts/${data.createPost.id}`;
+    await API.graphql({
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+      query: createSet,
+      variables: {
+        input: {
+          excerciseSetsId: excData.data.createExcercise.id,
+          easy_description: "TEST-easy",
+          hard_description: "TEST-hard",
+          brutal_description: "TEST-brutal",
+          easy_multiplier: 1,
+          hard_multiplier: 2,
+          brutal_multiplier: 3,
+        },
+      },
+    });
+    console.log("Set Created");
   } catch ({ errors }) {
     console.error(...errors);
     throw new Error(errors[0].message);
   }
 }
 
-export default function Home({ posts = [] }) {
+export default function Home({ workouts = [] }) {
+  //   console.log(posts);
   return (
     <div className={styles.container}>
       <Head>
@@ -56,21 +89,39 @@ export default function Home({ posts = [] }) {
         <h1 className={styles.title}>Amplify + Next.js</h1>
 
         <p className={styles.description}>
-          <code className={styles.code}>{posts.length}</code>
-          posts
+          <code className={styles.code}>{workouts.length}</code>
+          workouts
         </p>
 
         <div className={styles.grid}>
-          {posts.map((post) => (
-            <a className={styles.card} href={`/posts/${post.id}`} key={post.id}>
-              <h3>{post.title}</h3>
-              <p>{post.content}</p>
-              <p>{post.priority}</p>
-            </a>
-          ))}
+          {workouts.map((workout) => {
+            console.log(workout)
+            return (
+              <a
+                className={styles.card}
+                href={`/posts/${workout.id}`}
+                key={workout.id}
+              >
+                <h3>{workout.title}</h3>
+                <p>{workout.video}</p>
+                <p>{workout.rules}</p>
+                {workout.excercises.items
+                  ? workout.excercises.items.map((excercise, key) => {
+                      return (
+                        <div key={`id-${key}`}>
+                          <p>{excercise.title}</p>
+                          <p>{excercise.description}</p>
+                          <p>{excercise.time}</p>
+                        </div>
+                      );
+                    })
+                  : null}
+              </a>
+            );
+          })}
 
           <div className={styles.card}>
-            <h3 className={styles.title}>New Post</h3>
+            <h3 className={styles.title}>New Workout</h3>
 
             <Authenticator>
               <form onSubmit={handleCreatePost}>
@@ -83,22 +134,20 @@ export default function Home({ posts = [] }) {
                 </fieldset>
 
                 <fieldset>
-                  <legend>Content</legend>
+                  <legend>Video</legend>
                   <textarea
                     defaultValue="I built an Amplify app with Next.js!"
-                    name="content"
+                    name="video"
                   />
                 </fieldset>
-
                 <fieldset>
-                  <legend>Priority</legend>
+                  <legend>Rules</legend>
                   <textarea
                     defaultValue="I built an Amplify app with Next.js!"
-                    name="priority"
+                    name="rules"
                   />
                 </fieldset>
-
-                <button>Create Post</button>
+                <button>Create Workout</button>
                 <button type="button" onClick={() => Auth.signOut()}>
                   Sign out
                 </button>

@@ -2,16 +2,16 @@ import { Amplify, API, withSSRContext } from "aws-amplify";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import awsExports from "../../src/aws-exports";
-import { deletePost } from "../../src/graphql/mutations";
-import { getPost, listPosts } from "../../src/graphql/queries";
+import { deleteWorkout } from "../../src/graphql/mutations";
+import { getWorkout, listWorkouts } from "../../src/graphql/queries";
 import styles from "../../styles/Home.module.css";
 
 Amplify.configure({ ...awsExports, ssr: true });
 
 export async function getStaticPaths() {
   const SSR = withSSRContext();
-  const { data } = await SSR.API.graphql({ query: listPosts });
-  const paths = data.listPosts.items.map((post) => ({
+  const { data } = await SSR.API.graphql({ query: listWorkouts });
+  const paths = data.listWorkouts.items.map((post) => ({
     params: { id: post.id },
   }));
 
@@ -24,7 +24,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const SSR = withSSRContext();
   const { data } = await SSR.API.graphql({
-    query: getPost,
+    query: getWorkout,
     variables: {
       id: params.id,
     },
@@ -32,12 +32,12 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      post: data.getPost,
+      workout: data.getWorkout,
     },
   };
 }
 
-export default function Post({ post }) {
+export default function Workout({ workout }) {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -52,9 +52,9 @@ export default function Post({ post }) {
     try {
       await API.graphql({
         authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: deletePost,
+        query: deleteWorkout,
         variables: {
-          input: { id: post.id },
+          input: { id: workout.id },
         },
       });
 
@@ -68,14 +68,14 @@ export default function Post({ post }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{post.title} – Amplify + Next.js</title>
+        <title>{workout.title} – Amplify + Next.js</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>{post.title}</h1>
+        <h1 className={styles.title}>{workout.title}</h1>
 
-        <p className={styles.description}>{post.content}</p>
+        <p className={styles.description}>{workout.video}</p>
       </main>
 
       <footer className={styles.footer}>

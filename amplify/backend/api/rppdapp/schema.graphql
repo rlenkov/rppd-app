@@ -1,8 +1,31 @@
-type Post
+type Excercise
   @model
   @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
   id: ID!
   title: String!
-  content: String!
-  priority: String
+  description: String!
+  time: Int!
+  sets: [Set] @hasMany
+}
+
+type Set
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
+  id: ID!
+  easy_description: String!
+  hard_description: String!
+  brutal_description: String!
+  easy_multiplier: Int!
+  hard_multiplier: Int!
+  brutal_multiplier: Int!
+}
+
+type Workout
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
+  id: ID!
+  title: String!
+  video: String!
+  rules: [String]
+  excercises: [Excercise] @hasMany
 }
