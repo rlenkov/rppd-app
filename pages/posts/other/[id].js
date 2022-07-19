@@ -1,10 +1,10 @@
 import { Amplify, API, withSSRContext } from "aws-amplify";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import awsExports from "../../src/aws-exports";
-import { deleteWorkout } from "../../src/graphql/mutations";
-import { getWorkout, listWorkouts } from "../../src/graphql/queries";
-import styles from "../../styles/Home.module.css";
+import awsExports from "../../../src/aws-exports";
+import { deleteWorkout } from "../../../src/graphql/mutations";
+import { getWorkout, listWorkouts } from "../../../src/graphql/queries";
+import styles from "../../../styles/Home.module.css";
 
 Amplify.configure({ ...awsExports, ssr: true });
 
@@ -76,11 +76,6 @@ export default function Workout({ workout }) {
         <h1 className={styles.title}>{workout.title}</h1>
 
         <p className={styles.description}>{workout.video}</p>
-        <a
-                className={styles.card}
-                href={`/posts/other/${workout.id}`}
-                key={workout.id}
-              >ITTT</a>
       </main>
 
       <footer className={styles.footer}>
