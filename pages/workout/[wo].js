@@ -11,8 +11,8 @@ Amplify.configure({ ...awsExports, ssr: true });
 export async function getStaticPaths() {
   const SSR = withSSRContext();
   const { data } = await SSR.API.graphql({ query: listWorkouts });
-  const paths = data.listWorkouts.items.map((post) => ({
-    params: { id: post.id },
+  const paths = data.listWorkouts.items.map((workout) => ({
+    params: { wo: workout.id },
   }));
 
   return {
@@ -26,7 +26,7 @@ export async function getStaticProps({ params }) {
   const { data } = await SSR.API.graphql({
     query: getWorkout,
     variables: {
-      id: params.id,
+      id: params.wo,
     },
   });
 

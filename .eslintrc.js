@@ -4,8 +4,8 @@ module.exports = {
         es6: true,
     },
     extends: ['next/core-web-vitals'],
+    parser: '@babel/eslint-parser',
     parserOptions: {
-        parser: '@babel/eslint-parser',
         ecmaVersion: 6,
         ecmaFeatures: {
             experimentalObjectRestSpread: true,
@@ -14,7 +14,7 @@ module.exports = {
         sourceType: 'module',
         requireConfigFile: false,
     },
-    plugins: ['react', 'prettier'],
+    plugins: ['react', 'prettier', 'jsx'],
     extends: ['prettier'],
     rules: {
         'prettier/prettier': 2, // Means error
