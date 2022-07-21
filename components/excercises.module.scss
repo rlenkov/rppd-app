@@ -1,0 +1,18 @@
+.excercisesContainer {
+    border: 3px solid green;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.excerciseBox {
+    width: 200px;
+    border: 1px solid black;
+    margin: 5px;
+}
+
+.setsBox {
+    border: 1px solid black;
+    margin: 5px;
+}

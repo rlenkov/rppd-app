@@ -5,6 +5,7 @@ import { listExcercises, listWorkouts } from '../src/graphql/queries'
 import CreateExcercise from '../components/createExercise'
 import CreateWorkout from '../components/createWorkout'
 import Workouts from '../components/workouts'
+import Excercises from '../components/excercises'
 
 export async function getServerSideProps({ req }) {
     // When on the server, use withSSRContext({ req?: ServerRequest }):
@@ -27,6 +28,7 @@ const Admin = ({ exs = [], works = [] }) => {
                 <CreateWorkout exs={exs} />
                 <CreateExcercise />
                 <Workouts workouts={works} />
+                <Excercises exercises={exs} />
                 <div
                     style={{ marginTop: '50px', borderTop: '1px solid black' }}
                 >
