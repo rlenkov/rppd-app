@@ -5,6 +5,7 @@ const Intro = () => {
     const router = useRouter()
     console.log(router.query)
     const workoutId = router.query.wo
+    // Put session into local storage if session started
     return (
         <React.Fragment>
             <p>{workoutId}</p>
