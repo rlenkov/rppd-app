@@ -1,20 +1,7 @@
 import React, { useState } from 'react'
 import { utf8ToBase64 } from '../src/extensions/hash'
-import { API, withSSRContext } from 'aws-amplify'
+import { API } from 'aws-amplify'
 import { createWorkout, updateExcercise } from '../src/graphql/mutations'
-import { listExcercises } from '../src/graphql/queries'
-
-export async function getServerSideProps({ req }) {
-    // When on the server, use withSSRContext({ req?: ServerRequest }):
-    const SSR = withSSRContext({ req })
-    const response = await SSR.API.graphql({ query: listExcercises })
-
-    return {
-        props: {
-            exs: response.data.listExcercises.items,
-        },
-    }
-}
 
 const CreateWorkout = ({ exs = [] }) => {
     const [rules, setRules] = useState([])
@@ -118,7 +105,7 @@ const CreateWorkout = ({ exs = [] }) => {
                         }}
                     >
                         {exs.map(ex => (
-                            <option value={ex.id}>{ex.title}</option>
+                            <option key={`key-op-${ex.id}`} value={ex.id}>{ex.title}</option>
                         ))}
                     </select>
                     <p>Selected ones:</p>

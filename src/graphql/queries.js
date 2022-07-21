@@ -170,6 +170,19 @@ export const listWorkouts = /* GraphQL */ `
             description
             time
             sets {
+              items {
+                id
+                easy_description
+                hard_description
+                brutal_description
+                easy_multiplier
+                hard_multiplier
+                brutal_multiplier
+                createdAt
+                updatedAt
+                excerciseSetsId
+                owner
+              }
               nextToken
             }
             createdAt

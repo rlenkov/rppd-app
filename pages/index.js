@@ -36,7 +36,7 @@ export default function Home({ workouts = [] }) {
                             <h3>{workout.title}</h3>
                             <p>{workout.video}</p>
                             <p>{workout.rules}</p>
-                            {workout.excercises.items
+                            {/* {workout.excercises.items
                                 ? workout.excercises.items.map(
                                       (excercise, key) => {
                                           return (
@@ -48,7 +48,7 @@ export default function Home({ workouts = [] }) {
                                           )
                                       },
                                   )
-                                : null}
+                                : null} */}
                         </a>
                     )
                 })}
