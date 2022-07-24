@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import awsExports from '../../src/aws-exports'
 import { getWorkout, listWorkouts } from '../../src/graphql/queries'
 import { utf8ToBase64, base64ToUtf8} from '../../src/extensions/hash'
-import styles from '../../styles/Home.module.css'
 
 Amplify.configure({ ...awsExports, ssr: true })
 
@@ -44,28 +43,11 @@ export default function Workout({ workout }) {
 
     if (router.isFallback) {
         return (
-            <div className={styles.container}>
-                <h1 className={styles.title}>Loading&hellip;</h1>
+            <div>
+                <h1>Loading&hellip;</h1>
             </div>
         )
     }
-
-    // async function handleDelete() {
-    //     try {
-    //         await API.graphql({
-    //             authMode: 'AMAZON_COGNITO_USER_POOLS',
-    //             query: deleteWorkout,
-    //             variables: {
-    //                 input: { id: workout.id },
-    //             },
-    //         })
-
-    //         window.location.href = '/'
-    //     } catch ({ errors }) {
-    //         console.error(...errors)
-    //         throw new Error(errors[0].message)
-    //     }
-    // }
 
     return (
         <React.Fragment>

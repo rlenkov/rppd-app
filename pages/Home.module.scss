@@ -1,0 +1,19 @@
+.container {
+    padding: 50px 50px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.card {
+  width: 100%;
+  border: 2px solid grey;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  padding: 10px;
+  text-align: center;
+  &:hover {
+    background-color: grey;
+  }
+  cursor: pointer;
+}

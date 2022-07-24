@@ -1,7 +1,8 @@
+import React, { useState, useEffect } from 'react'
 import { withSSRContext } from 'aws-amplify'
 import { listWorkouts } from '../src/graphql/queries'
-import { utf8ToBase64} from '../src/extensions/hash'
-import styles from '../styles/Home.module.css'
+import { Intro } from './intro'
+import styles from './Home.module.scss'
 
 export async function getServerSideProps({ req }) {
     // When on the server, use withSSRContext({ req?: ServerRequest }):
@@ -16,43 +17,45 @@ export async function getServerSideProps({ req }) {
 }
 
 export default function Home({ workouts = [] }) {
-    //   console.log(posts);
+    const [modal, setModal] = useState(null)
+
+    const modalExitListener = event => {
+        if (event.key === 'Escape') {
+            setModal(null)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('keydown', modalExitListener)
+        return () => {
+            window.removeEventListener('keydown', modalExitListener)
+        }
+    }, [])
+
     return (
         <div className={styles.container}>
-            <p className={styles.description}>
-                <code className={styles.code}>{workouts.length}</code>
-                workouts
-            </p>
-
-            <div className={styles.grid}>
-                {workouts.map(workout => {
-                    console.log(workout)
-                    return (
-                        <a
-                            className={styles.card}
-                            href={`/workout/${utf8ToBase64(workout.id)}`}
-                            key={workout.id}
-                        >
-                            <h3>{workout.title}</h3>
-                            <p>{workout.video}</p>
-                            <p>{workout.rules}</p>
-                            {/* {workout.excercises.items
-                                ? workout.excercises.items.map(
-                                      (excercise, key) => {
-                                          return (
-                                              <div key={`id-${key}`}>
-                                                  <p>{excercise.title}</p>
-                                                  <p>{excercise.description}</p>
-                                                  <p>{excercise.time}</p>
-                                              </div>
-                                          )
-                                      },
-                                  )
-                                : null} */}
-                        </a>
-                    )
-                })}
-            </div>
+            {workouts.map(workout => {
+                return (
+                    <button
+                        className={styles.card}
+                        onClick={() => {
+                            setModal(
+                                <Intro
+                                    id={workout.id}
+                                    title={workout.title}
+                                    rules={workout.rules}
+                                    video={workout.video}
+                                    setModal={setModal}
+                                />,
+                            )
+                        }}
+                        key={workout.id}
+                    >
+                        <h3>{workout.title}</h3>
+                    </button>
+                )
+            })}
+            {modal}
         </div>
     )
 }

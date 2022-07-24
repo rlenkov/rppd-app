@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Authenticator } from '@aws-amplify/ui-react'
 import { Auth, withSSRContext, API } from 'aws-amplify'
 import { listExcercises, listWorkouts } from '../src/graphql/queries'
-import CreateExcercise from '../components/createExercise'
 import CreateWorkout from '../components/createWorkout'
 import Workouts from '../components/workouts'
-import Excercises from '../components/excercises'
 import { CacheContext } from '../src/extensions/context'
 
 export async function getServerSideProps({ req }) {

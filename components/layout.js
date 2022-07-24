@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
+import styles from './layout.module.scss'
 
 const Layout = ({ children }) => {
     const currentYear = new Date().getFullYear()
@@ -15,12 +16,13 @@ const Layout = ({ children }) => {
                 />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
-            <main>{children}</main>
-            <footer>
-                <div>
-                    <p>Lenkovits</p>
-                    <p>{`Copyright ${currentYear}`}</p>
-                </div>
+            <header className={styles.mainHeader}>
+                <h1>Rppd!</h1>
+            </header>
+            <main className={styles.container}>{children}</main>
+            <footer className={styles.mainFooter}>
+                <p>Lenkovits</p>
+                <p>{`Copyright ${currentYear}`}</p>
             </footer>
         </React.Fragment>
     )
