@@ -1,0 +1,55 @@
+.title {
+    color: black;
+}
+
+.container {
+    border: 2px solid black;
+    padding: 15px;
+    margin: 15px;
+}
+
+.titleInput {
+    width: 300px;
+}
+
+.videoInput {
+    width: 300px;
+}
+
+.rulesInput {
+    width: 300px;
+}
+
+.rule {
+    background-color: yellow;
+    position: relative;
+}
+
+.ruleBox {
+    border: 1px dotted blue;
+    padding: 5px;
+}
+
+.ruleRemove {
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.excerciseBox {
+    border: 1px dotted blue;
+    padding: 5px;
+}
+
+.exercise {
+    background-color: yellow;
+    position: relative;
+}
+
+.exRemove {
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+    cursor: pointer;
+}

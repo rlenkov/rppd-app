@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Authenticator } from '@aws-amplify/ui-react'
-import { Auth, withSSRContext } from 'aws-amplify'
+import { Auth, withSSRContext, API } from 'aws-amplify'
 import { listExcercises, listWorkouts } from '../src/graphql/queries'
 import CreateExcercise from '../components/createExercise'
 import CreateWorkout from '../components/createWorkout'
 import Workouts from '../components/workouts'
 import Excercises from '../components/excercises'
+import { CacheContext } from '../src/extensions/context'
 
 export async function getServerSideProps({ req }) {
     // When on the server, use withSSRContext({ req?: ServerRequest }):
@@ -22,20 +23,60 @@ export async function getServerSideProps({ req }) {
 }
 
 const Admin = ({ exs = [], works = [] }) => {
+    const [contentBuffer, setContentBuffer] = useState({
+        exercises: [],
+        workouts: [],
+    })
+    const [modal, setModal] = useState(null)
+
+    const modalExitListener = event => {
+        if (event.key === 'Escape') {
+            setModal(null)
+        }
+    }
+
+    useEffect(() => {
+        setContentBuffer({
+            exercises: exs,
+            workouts: works,
+        })
+        window.addEventListener('keydown', modalExitListener)
+        return () => {
+            window.removeEventListener('keydown', modalExitListener)
+        }
+    }, [])
+    const refresh = () => {
+        getCache()
+    }
+    const getCache = async () => {
+        const exerciseResponse = await API.graphql({ query: listExcercises })
+        const workResponse = await API.graphql({ query: listWorkouts })
+        setContentBuffer({
+            exercises: exerciseResponse.data.listExcercises.items,
+            workouts: workResponse.data.listWorkouts.items,
+        })
+    }
     return (
         <React.Fragment>
             <Authenticator>
-                <CreateWorkout exs={exs} />
-                <CreateExcercise />
-                <Workouts workouts={works} />
-                <Excercises exercises={exs} />
-                <div
-                    style={{ marginTop: '50px', borderTop: '1px solid black' }}
+                <CacheContext.Provider
+                    value={{ cache: contentBuffer, refresh }}
                 >
-                    <button type='button' onClick={() => Auth.signOut()}>
-                        Sign out
-                    </button>
-                </div>
+                    <h1>Admin Menu</h1>
+                    <CreateWorkout modal={modal} setModal={setModal} />
+                    <Workouts />
+                    <div
+                        style={{
+                            marginTop: '50px',
+                            borderTop: '1px solid black',
+                        }}
+                    >
+                        <button type='button' onClick={() => Auth.signOut()}>
+                            Sign out
+                        </button>
+                    </div>
+                    {modal}
+                </CacheContext.Provider>
             </Authenticator>
         </React.Fragment>
     )

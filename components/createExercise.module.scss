@@ -1,0 +1,61 @@
+.modalBackground {
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+}
+
+.modalBox {
+    z-index: 10;
+    position: relative;
+    background-color: white;
+    top: 15%;
+    left: 35%;
+    width: 30%;
+    height: auto;
+    padding: 10px;
+}
+
+.setContainer {
+    margin: 15px 0;
+    button {
+        margin: 5px 0;
+    }
+}
+
+.exitButton {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.createButton {
+    display: block;
+    margin: auto;
+}
+
+.titleInput {
+    width: 300px;
+}
+
+.descriptionInput {
+    width: 300px;
+}
+
+.setBox {
+    margin: 2px;
+}
+
+.setText {
+    width: 60%;
+    margin: 2px;
+}
+
+.setNumber {
+    width: 30%;
+    margin: 2px;
+}

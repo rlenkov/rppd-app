@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-import { utf8ToBase64 } from '../src/extensions/hash'
-import { API } from 'aws-amplify'
-import { createSet, createExcercise } from '../src/graphql/mutations'
+import React, { useState, useContext } from 'react'
+import { CacheContext } from '../src/extensions/context'
+import { randomAlphanumericString } from '../src/extensions/hash'
+import { Sets } from '../components/sets'
+import styles from './createExercise.module.scss'
 
-const CreateExcercise = () => {
+const CreateExcercise = props => {
     const [sets, setSets] = useState([])
-
+    const { refresh } = useContext(CacheContext)
     const handleAddSet = setIdMap => {
         const easyDescription = document.getElementById(
             setIdMap.easyDescriptionId,
@@ -28,12 +29,13 @@ const CreateExcercise = () => {
         setSets([
             ...sets,
             {
-                easyDescription: easyDescription.value,
-                hardDescription: hardDescription.value,
-                brutalDescription: brutalDescription.value,
-                easyMultiplier: easyMultiplier.value,
-                hardMultiplier: hardMultiplier.value,
-                brutalMultiplier: brutalMultiplier.value,
+                id: setIdMap.id,
+                easy_description: easyDescription.value,
+                hard_description: hardDescription.value,
+                brutal_description: brutalDescription.value,
+                easy_multiplier: easyMultiplier.value,
+                hard_multiplier: hardMultiplier.value,
+                brutal_multiplier: brutalMultiplier.value,
             },
         ])
         easyDescription.value = ''
@@ -48,157 +50,159 @@ const CreateExcercise = () => {
         event.preventDefault()
         const form = new FormData(event.target)
 
-        try {
-            const excData = await API.graphql({
-                authMode: 'AMAZON_COGNITO_USER_POOLS',
-                query: createExcercise,
-                variables: {
-                    input: {
-                        title: form.get('title'),
-                        description: form.get('description'),
-                        time: form.get('time'),
-                    },
-                },
-            })
-            for (let index = 0; index < sets.length; index++) {
-                const currentSet = sets[index]
-                await API.graphql({
-                    authMode: 'AMAZON_COGNITO_USER_POOLS',
-                    query: createSet,
-                    variables: {
-                        input: {
-                            excerciseSetsId: excData.data.createExcercise.id,
-                            easy_description: currentSet.easyDescription,
-                            hard_description: currentSet.hardDescription,
-                            brutal_description: currentSet.brutalDescription,
-                            easy_multiplier: currentSet.easyMultiplier,
-                            hard_multiplier: currentSet.hardMultiplier,
-                            brutal_multiplier: currentSet.brutalMultiplier,
-                        },
-                    },
-                })
-            }
-        } catch ({ errors }) {
-            console.error(...errors)
-            throw new Error(errors[0].message)
+        const newExercise = {
+            id: randomAlphanumericString(),
+            title: form.get('title'),
+            description: form.get('description'),
+            time: form.get('time'),
+            sets: sets,
         }
-        
+
+        props.addExercise(newExercise)
+
         document.getElementById('exercise-title-id').value = ''
         document.getElementById('exercise-description-id').value = ''
         document.getElementById('exercise-time-id').value = ''
         setSets([])
+        props.setModal(null)
+        refresh()
     }
     return (
         <React.Fragment>
-            <form onSubmit={handleCreateExcercise}>
-                <fieldset>
-                    <legend>Title</legend>
-                    <input
-                        placeholder={`Excercise Name`}
-                        name='title'
-                        type='text'
-                        id='exercise-title-id'
-                    />
-                </fieldset>
-                <fieldset>
-                    <legend>Description</legend>
-                    <input
-                        placeholder={`Excercise description`}
-                        name='description'
-                        type='text'
-                        id='exercise-description-id'
-                    />
-                </fieldset>
-                <fieldset>
-                    <legend>Time</legend>
-                    <input
-                        placeholder={`Seconds`}
-                        name='time'
-                        type='number'
-                        min='1'
-                        max='1000'
-                        id='exercise-time-id'
-                    />
-                </fieldset>
-                <div>
-                    <p>Sets:</p>
-                    {sets.map(set => (
-                        <div key={`key-${utf8ToBase64(set.easyDescription)}`}>
-                            <p>{set.easyDescription}</p>
-                            <p>{set.hardDescription}</p>
-                            <p>{set.brutalDescription}</p>
-                            <p>{set.easyMultiplier}</p>
-                            <p>{set.hardMultiplier}</p>
-                            <p>{set.brutalMultiplier}</p>
+            <div className={styles.modalBackground}>
+                <div className={styles.modalBox}>
+                    <form onSubmit={handleCreateExcercise}>
+                        <fieldset>
+                            <legend>Title</legend>
+                            <input
+                                className={styles.titleInput}
+                                placeholder={`Excercise Name`}
+                                name='title'
+                                type='text'
+                                id='exercise-title-id'
+                            />
+                        </fieldset>
+                        <fieldset>
+                            <legend>Description</legend>
+                            <textarea
+                                className={styles.descriptionInput}
+                                placeholder={`Excercise description`}
+                                name='description'
+                                type='text'
+                                id='exercise-description-id'
+                                rows={3}
+                            />
+                        </fieldset>
+                        <fieldset>
+                            <legend>Time</legend>
+                            <input
+                                placeholder={`Seconds`}
+                                name='time'
+                                type='number'
+                                min='1'
+                                max='1000'
+                                id='exercise-time-id'
+                            />
+                        </fieldset>
+                        <div className={styles.setContainer}>
+                            <Sets sets={sets} />
+                            <fieldset>
+                                <legend>Add new sets:</legend>
+                                <div className={styles.setBox}>
+                                    <input
+                                        className={styles.setText}
+                                        placeholder={`Easy Description`}
+                                        name='easy_description'
+                                        type='text'
+                                        id='easy-description-input-field'
+                                    />
+                                    <input
+                                        className={styles.setNumber}
+                                        placeholder={`Easy Multiplier %`}
+                                        name='easy_multiplier'
+                                        type='number'
+                                        id='easy-multiplier-input-field'
+                                        min='1'
+                                        max='200'
+                                    />
+                                </div>
+                                <div className={styles.setBox}>
+                                    <input
+                                        className={styles.setText}
+                                        placeholder={`Hard Description`}
+                                        name='hard_description'
+                                        type='text'
+                                        id='hard-description-input-field'
+                                    />
+                                    <input
+                                        className={styles.setNumber}
+                                        placeholder={`Hard Multiplier %`}
+                                        name='hard_multiplier'
+                                        type='number'
+                                        id='hard-multiplier-input-field'
+                                        min='1'
+                                        max='200'
+                                    />
+                                </div>
+                                <div className={styles.setBox}>
+                                    <input
+                                        className={styles.setText}
+                                        placeholder={`Brutal Description`}
+                                        name='brutal_description'
+                                        type='text'
+                                        id='brutal-description-input-field'
+                                    />
+
+                                    <input
+                                        className={styles.setNumber}
+                                        placeholder={`Brutal Multiplier %`}
+                                        name='brutal_multiplier'
+                                        type='number'
+                                        id='brutal-multiplier-input-field'
+                                        min='1'
+                                        max='200'
+                                    />
+                                </div>
+                            </fieldset>
+                            <button
+                                type='button'
+                                onClick={() => {
+                                    handleAddSet({
+                                        id: randomAlphanumericString(),
+                                        easyDescriptionId:
+                                            'easy-description-input-field',
+                                        hardDescriptionId:
+                                            'hard-description-input-field',
+                                        brutalDescriptionId:
+                                            'brutal-description-input-field',
+                                        easyMultiplierId:
+                                            'easy-multiplier-input-field',
+                                        hardMultiplierId:
+                                            'hard-multiplier-input-field',
+                                        brutalMultiplierId:
+                                            'brutal-multiplier-input-field',
+                                    })
+                                }}
+                            >
+                                Add Sets
+                            </button>
+                            <hr />
                         </div>
-                    ))}
-                    <fieldset>
-                        <legend>Add new sets:</legend>
-                        <input
-                            placeholder={`Easy Description`}
-                            name='easy_description'
-                            type='text'
-                            id='easy-description-input-field'
-                        />
-                        <input
-                            placeholder={`Hard Description`}
-                            name='hard_description'
-                            type='text'
-                            id='hard-description-input-field'
-                        />
-                        <input
-                            placeholder={`Brutal Description`}
-                            name='brutal_description'
-                            type='text'
-                            id='brutal-description-input-field'
-                        />
-                        <input
-                            placeholder={`Easy Multiplier %`}
-                            name='easy_multiplier'
-                            type='number'
-                            id='easy-multiplier-input-field'
-                            min='1'
-                            max='200'
-                        />
-                        <input
-                            placeholder={`Hard Multiplier %`}
-                            name='hard_multiplier'
-                            type='number'
-                            id='hard-multiplier-input-field'
-                            min='1'
-                            max='200'
-                        />
-                        <input
-                            placeholder={`Brutal Multiplier %`}
-                            name='brutal_multiplier'
-                            type='number'
-                            id='brutal-multiplier-input-field'
-                            min='1'
-                            max='200'
-                        />
-                    </fieldset>
+                        <button className={styles.createButton} type='submit'>
+                            Create Excercise
+                        </button>
+                    </form>
                     <button
+                        className={styles.exitButton}
                         type='button'
                         onClick={() => {
-                            handleAddSet({
-                                easyDescriptionId:
-                                    'easy-description-input-field',
-                                hardDescriptionId:
-                                    'hard-description-input-field',
-                                brutalDescriptionId:
-                                    'brutal-description-input-field',
-                                easyMultiplierId: 'easy-multiplier-input-field',
-                                hardMultiplierId: 'hard-multiplier-input-field',
-                                brutalMultiplierId:
-                                    'brutal-multiplier-input-field',
-                            })
+                            props.setModal(null)
                         }}
                     >
-                        Add Sets
+                        X
                     </button>
                 </div>
-                <button type='submit'>Create Excercise</button>
-            </form>
+            </div>
         </React.Fragment>
     )
 }

@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { API } from 'aws-amplify'
-import { deleteWorkout } from '../src/graphql/mutations'
+import {
+    deleteWorkout,
+    deleteExcercise,
+    deleteSet,
+} from '../src/graphql/mutations'
 import { utf8ToBase64 } from '../src/extensions/hash'
+import { CacheContext } from '../src/extensions/context'
+import Excercises from '../components/excercises'
 import styles from '../styles/workouts.module.scss'
 
-const Workouts = ({ workouts = [] }) => {
-    async function handleDelete(id) {
+const Workouts = () => {
+    const { cache, refresh } = useContext(CacheContext)
+    async function handleDelete(id, title, exercises) {
         try {
             await API.graphql({
                 authMode: 'AMAZON_COGNITO_USER_POOLS',
@@ -14,16 +21,38 @@ const Workouts = ({ workouts = [] }) => {
                     input: { id: id },
                 },
             })
+            for (let i = 0; i < exercises.length; i++) {
+                const currentExcercise = exercises[i]
+                await API.graphql({
+                    authMode: 'AMAZON_COGNITO_USER_POOLS',
+                    query: deleteExcercise,
+                    variables: {
+                        input: { id: currentExcercise.id },
+                    },
+                })
+                for (let k = 0; k < currentExcercise.sets.items.length; k++) {
+                    const currentSet = currentExcercise.sets.items[k]
+                    await API.graphql({
+                        authMode: 'AMAZON_COGNITO_USER_POOLS',
+                        query: deleteSet,
+                        variables: {
+                            input: { id: currentSet.id },
+                        },
+                    })
+                }
+            }
         } catch ({ errors }) {
             console.error(...errors)
             throw new Error(errors[0].message)
         }
-        window.location.reload()
+        refresh()
+        alert(`Workout '${title}' deleted!`)
     }
 
     const generateWorkout = workout => {
+        console.log(workout)
         return (
-            <div className={styles.workoutBox}>
+            <div key={workout.id} className={styles.workoutBox}>
                 <p>Title: {workout.title}</p>
                 <p>
                     Video: <a href={workout.video}>{workout.video}</a>
@@ -37,12 +66,20 @@ const Workouts = ({ workouts = [] }) => {
                         ))}
                 </div>
                 <p>Excercises:</p>
-                <div>
-                    {workout.excercises.items.map(exe => (
-                        <p key={utf8ToBase64(exe.title)}>{exe.title}</p>
-                    ))}
-                </div>
-                <button type='button' onClick={() => handleDelete(workout.id)}>
+                <Excercises
+                    exercises={workout.excercises.items}
+                    remove={() => {}}
+                />
+                <button
+                    type='button'
+                    onClick={() =>
+                        handleDelete(
+                            workout.id,
+                            workout.title,
+                            workout.excercises.items,
+                        )
+                    }
+                >
                     Delete Workout
                 </button>
             </div>
@@ -52,7 +89,7 @@ const Workouts = ({ workouts = [] }) => {
         <React.Fragment>
             <div className={styles.workoutsContainer}>
                 <h2>Workouts:</h2>
-                {workouts.map(workout => generateWorkout(workout))}
+                {cache.workouts.map(workout => generateWorkout(workout))}
             </div>
         </React.Fragment>
     )
