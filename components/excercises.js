@@ -2,7 +2,12 @@ import React from 'react'
 import { Sets } from './sets'
 import styles from './excercises.module.scss'
 
-const Excercises = ({ exercises, remove, doRemove }) => {
+export const Excercises = ({
+    exercises,
+    remove,
+    doRemove,
+    refWeight = null,
+}) => {
     async function handleDelete(id) {
         remove(id)
     }
@@ -16,7 +21,7 @@ const Excercises = ({ exercises, remove, doRemove }) => {
                 <p>Title: {exercise.title}</p>
                 <p>Description: {exercise.description}</p>
                 <p>Time: {exercise.time}</p>
-                <Sets sets={setsArray} />
+                <Sets sets={setsArray} refWeight={refWeight} />
                 {doRemove ? (
                     <button
                         type='button'
