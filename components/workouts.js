@@ -8,7 +8,7 @@ import {
 import { utf8ToBase64 } from '../src/extensions/hash'
 import { CacheContext } from '../src/extensions/context'
 import Excercises from '../components/excercises'
-import styles from '../styles/workouts.module.scss'
+import styles from './workouts.module.scss'
 
 const Workouts = () => {
     const { cache, refresh } = useContext(CacheContext)
@@ -53,23 +53,27 @@ const Workouts = () => {
         console.log(workout)
         return (
             <div key={workout.id} className={styles.workoutBox}>
-                <p>Title: {workout.title}</p>
-                <p>
-                    Video: <a href={workout.video}>{workout.video}</a>
-                </p>
-                <p>Rules:</p>
                 <div>
-                    {workout.rules
-                        .filter(r => r !== null)
-                        .map(rule => (
-                            <p key={utf8ToBase64(rule)}>- {rule}</p>
-                        ))}
+                    <p>Title: {workout.title}</p>
+                    <p>
+                        Video: <a href={workout.video}>{workout.video}</a>
+                    </p>
+                    <p>Rules:</p>
+                    <div>
+                        {workout.rules
+                            .filter(r => r !== null)
+                            .map(rule => (
+                                <p key={utf8ToBase64(rule)}>- {rule}</p>
+                            ))}
+                    </div>
                 </div>
-                <p>Excercises:</p>
-                <Excercises
-                    exercises={workout.excercises.items}
-                    remove={() => {}}
-                />
+                <div>
+                    <p>Excercises:</p>
+                    <Excercises
+                        exercises={workout.excercises.items}
+                        remove={() => {}}
+                    />
+                </div>
                 <button
                     type='button'
                     onClick={() =>

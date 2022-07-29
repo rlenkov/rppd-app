@@ -132,6 +132,7 @@ export default function Workout({ workout }) {
             handleStart()
         } else {
             alert('Congrats!')
+            router.push(`/`)
         }
     }
 

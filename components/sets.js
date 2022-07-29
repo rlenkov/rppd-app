@@ -11,13 +11,27 @@ export const Sets = props => {
         <React.Fragment>
             <div className={styles.setsContainer}>
                 <p>Sets:</p>
-                {props.sets.map(set => (
-                    <div key={set.id} className={styles.setBox}>
-                        <p>{`${set.easy_description}, refweight: ${getWeight(set.easy_multiplier)}`}</p>
-                        <p>{`${set.hard_description}, refweight: ${getWeight(set.hard_multiplier)}`}</p>
-                        <p>{`${set.brutal_description}, refweight: ${getWeight(set.brutal_multiplier)}`}</p>
-                    </div>
-                ))}
+                <div className={styles.setsFlex}>
+                    {props.sets.map(set => (
+                        <div key={set.id} className={styles.setBox}>
+                            <p>{`${
+                                set.easy_description
+                            }, refweight: ${getWeight(
+                                set.easy_multiplier,
+                            )}`}</p>
+                            <p>{`${
+                                set.hard_description
+                            }, refweight: ${getWeight(
+                                set.hard_multiplier,
+                            )}`}</p>
+                            <p>{`${
+                                set.brutal_description
+                            }, refweight: ${getWeight(
+                                set.brutal_multiplier,
+                            )}`}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </React.Fragment>
     )

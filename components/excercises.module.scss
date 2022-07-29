@@ -1,16 +1,21 @@
 .excercisesContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
+    padding: 15px;
 }
 
 .excerciseBox {
-    width: 200px;
+    flex-grow: 1;
     border: 1px solid black;
     margin: 5px;
+    padding: 15px;
 }
 
 .setsBox {
     border: 1px solid black;
     margin: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
 }

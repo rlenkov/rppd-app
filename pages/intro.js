@@ -27,6 +27,7 @@ export const Intro = props => {
         state: 'video',
         component: videoState,
     })
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleNext = () => {
         if (introState.state === 'video') {
@@ -35,12 +36,32 @@ export const Intro = props => {
                 component: rulesState,
             })
         } else {
+            setIsLoading(true)
             router.push(`/workout/${utf8ToBase64(props.id)}`)
         }
     }
 
     return (
         <React.Fragment>
+            {isLoading ? (
+                <div className={styles.loadModal}>
+                    <div className={styles.ldsSpinner}>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <h2 styles={{ marginLeft: '15px' }}>Loading...</h2>
+                </div>
+            ) : null}
             <div className={styles.modalBackground}>
                 {introState.component}
                 <button
