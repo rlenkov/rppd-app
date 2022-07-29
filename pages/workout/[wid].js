@@ -3,7 +3,7 @@ import { Amplify, withSSRContext } from 'aws-amplify'
 import { useRouter } from 'next/router'
 import awsExports from '../../src/aws-exports'
 import { getWorkout, listWorkouts } from '../../src/graphql/queries'
-import { Excercises } from '../../components/excercises'
+import { Exercise } from '../../components/client/exercise'
 import { utf8ToBase64, base64ToUtf8 } from '../../src/extensions/hash'
 import styles from './workout.module.scss'
 
@@ -81,6 +81,7 @@ export default function Workout({ workout }) {
     )
     const [status, setStatus] = useState(STATUS.STOPPED)
     const [refWeight, setRefWeight] = useState(null)
+    const [difficulty, setDifficulty] = useState('easy')
 
     const secondsToDisplay = secondsRemaining % 60
     const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60
@@ -129,13 +130,21 @@ export default function Workout({ workout }) {
             setCount(count + 1)
             setSecondsRemaining(currentExercise.time)
             handleStart()
+        } else {
+            alert('Congrats!')
         }
     }
 
     const handleSetRefWeight = event => {
         event.preventDefault()
         const form = new FormData(event.target)
-        setRefWeight(form.get('refweight'))
+        const refWeightData = form.get('refweight')
+        if (!refWeightData) {
+            alert('Please provide a reference weight!')
+        } else {
+            setRefWeight(refWeightData)
+            setDifficulty(form.get('difficulty'))
+        }
     }
 
     return (
@@ -151,23 +160,41 @@ export default function Workout({ workout }) {
                                 className={styles.refWeightInput}
                                 placeholder={`Input your reference weight`}
                                 name='refweight'
-                                type='text'
+                                type='number'
                             />
-                            <button type='submit'>Start</button>
+                            <select
+                                className={styles.difficultyInput}
+                                name='difficulty'
+                                id='difficulty'
+                            >
+                                <option value='easy'>Easy</option>
+                                <option value='hard'>Hard</option>
+                                <option value='brutal'>Brutal</option>
+                            </select>
+                            <button
+                                className={styles.startButton}
+                                type='submit'
+                            >
+                                Start
+                            </button>
                         </form>
                     </div>
                 </div>
             ) : null}
-            <h1>{workout.title}</h1>
-            <Excercises exercises={[currentExercise]} refWeight={refWeight} />
-            <div>
-                <div style={{ padding: 20 }}>
+            <h1 className={styles.workoutTitle}>{workout.title}</h1>
+            <Exercise
+                count={count + 1}
+                exercise={currentExercise}
+                refWeight={refWeight}
+                difficulty={difficulty}
+            />
+            <div className={styles.countdownBox}>
+                <div className={styles.countdownField}>
                     {twoDigits(hoursToDisplay)}:{twoDigits(minutesToDisplay)}:
                     {twoDigits(secondsToDisplay)}
                 </div>
-            </div>
-            {count < exercises.length - 1 ? (
                 <button
+                    className={styles.nextButton}
                     type='button'
                     onClick={() => {
                         handleNext()
@@ -175,7 +202,7 @@ export default function Workout({ workout }) {
                 >
                     Next Exercise
                 </button>
-            ) : null}
+            </div>
         </React.Fragment>
     )
 }

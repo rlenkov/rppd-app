@@ -27,13 +27,51 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
 
 .refWeightInput {
     width: 50%;
     display: block;
     text-align: center;
-    margin-bottom: 10%;
+    margin-bottom: 15px;
 }
 
+.difficultyInput {
+    display: block;
+    width: 50%;
+    margin-bottom: 15px;
+}
+
+.startButton {
+    width: 50%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.workoutTitle {
+    text-align: center;
+}
+
+.countdownBox {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.countdownField {
+    text-align: center;
+    width: 200px;
+    padding: 20px;
+    font-weight: bold;
+}
+
+.nextButton {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
