@@ -70,14 +70,19 @@ function useInterval(callback, delay) {
 const twoDigits = num => String(num).padStart(2, '0')
 
 export default function Workout({ workout }) {
+    const initEx = () => {
+        if (workout && workout.excercises) {
+            return workout.excercises.items
+        }
+        return []
+    }
+
     const router = useRouter()
-    const [exercises, setExercises] = useState(
-        workout.excercises ? workout.excercises.items : [],
-    )
+    const [exercises, setExercises] = useState(initEx())
     const [count, setCount] = useState(0)
     const currentExercise = exercises[count]
     const [secondsRemaining, setSecondsRemaining] = useState(
-        currentExercise.time,
+        currentExercise ? currentExercise.time : 0,
     )
     const [status, setStatus] = useState(STATUS.STOPPED)
     const [refWeight, setRefWeight] = useState(null)
@@ -128,7 +133,7 @@ export default function Workout({ workout }) {
     const handleNext = () => {
         if (count < exercises.length - 1) {
             setCount(count + 1)
-            setSecondsRemaining(currentExercise.time)
+            setSecondsRemaining(currentExercise ? currentExercise.time : 0)
             handleStart()
         } else {
             alert('Congrats!')

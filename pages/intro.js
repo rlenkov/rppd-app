@@ -3,12 +3,12 @@ import { useRouter } from 'next/router'
 import { utf8ToBase64 } from '../src/extensions/hash'
 import styles from './intro.module.scss'
 
-export const Intro = props => {
+export const Intro = ({ id, title, rules, video, setModal }) => {
     const router = useRouter()
     const videoState = (
         <iframe
             className={styles.videoScreen}
-            src={props.video}
+            src={video}
             frameborder='0'
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
             allowfullscreen
@@ -16,11 +16,9 @@ export const Intro = props => {
     )
     const rulesState = (
         <div className={styles.rulesScreen}>
-            <h2>{props.title}</h2>
+            <h2>{title}</h2>
             <h3>Rules:</h3>
-            {props.rules.map(rule => (
-                <p>{rule}</p>
-            ))}
+            {rules ? rules.map(rule => <p>{rule}</p>) : null}
         </div>
     )
     const [introState, setIntroState] = useState({
@@ -37,7 +35,7 @@ export const Intro = props => {
             })
         } else {
             setIsLoading(true)
-            router.push(`/workout/${utf8ToBase64(props.id)}`)
+            router.push(`/workout/${utf8ToBase64(id)}`)
         }
     }
 
@@ -77,7 +75,7 @@ export const Intro = props => {
                     className={styles.backButton}
                     type='button'
                     onClick={() => {
-                        props.setModal(null)
+                        setModal(null)
                     }}
                 >
                     Exit
