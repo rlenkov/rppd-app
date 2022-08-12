@@ -77,16 +77,29 @@ export default function Workout({ workout }) {
         return []
     }
 
+    const calculateHealth = () => {
+        const maxHealth = 100
+        const exerciseNumber = exercises.length
+        const equalParts = Math.floor(maxHealth / exerciseNumber)
+        const remainder = maxHealth % exerciseNumber
+        const progressMinus = count * equalParts
+        let progress = 100 - progressMinus
+        if (progress - remainder === 0) {
+            progress = 1
+        }
+        return `${progress}%`
+    }
+
     const router = useRouter()
     const [exercises, setExercises] = useState(initEx())
     const [count, setCount] = useState(0)
+    const [health, setHealth] = useState(calculateHealth())
     const currentExercise = exercises[count]
     const [secondsRemaining, setSecondsRemaining] = useState(
         currentExercise ? currentExercise.time : 0,
     )
     const [status, setStatus] = useState(STATUS.STOPPED)
     const [refWeight, setRefWeight] = useState(null)
-    const [difficulty, setDifficulty] = useState('easy')
 
     const secondsToDisplay = secondsRemaining % 60
     const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60
@@ -105,7 +118,7 @@ export default function Workout({ workout }) {
                 setSecondsRemaining(secondsRemaining - 1)
             } else {
                 handleStop()
-                handleNext()
+                alert("You've run out of time!")
             }
         },
         status === STATUS.STARTED ? 1000 : null,
@@ -116,12 +129,6 @@ export default function Workout({ workout }) {
         setExercises(workout.excercises.items)
     }, [workout])
 
-    useEffect(() => {
-        if (refWeight !== null) {
-            handleStart()
-        }
-    }, [refWeight])
-
     if (router.isFallback) {
         return (
             <div>
@@ -130,14 +137,29 @@ export default function Workout({ workout }) {
         )
     }
 
+    useEffect(() => {
+        setHealth(calculateHealth())
+    }, [count])
+
     const handleNext = () => {
-        if (count < exercises.length - 1) {
-            setCount(count + 1)
-            setSecondsRemaining(currentExercise ? currentExercise.time : 0)
+        if (secondsRemaining !== 0 && status === STATUS.STOPPED) {
             handleStart()
-        } else {
-            alert('Congrats!')
+        } else if (
+            secondsRemaining === 0 &&
+            status === STATUS.STOPPED &&
+            count >= exercises.length - 1
+        ) {
             router.push(`/`)
+        } else {
+            handleStop()
+            if (count < exercises.length - 1) {
+                setCount(count + 1)
+                setSecondsRemaining(currentExercise ? currentExercise.time : 0)
+            } else {
+                setHealth('1%')
+                setSecondsRemaining(0)
+                alert('Congrats, you have won!')
+            }
         }
     }
 
@@ -149,8 +171,24 @@ export default function Workout({ workout }) {
             alert('Please provide a reference weight!')
         } else {
             setRefWeight(refWeightData)
-            setDifficulty(form.get('difficulty'))
         }
+    }
+
+    const getButtonText = () => {
+        if (status === STATUS.STOPPED && secondsRemaining !== 0) {
+            return 'START'
+        }
+        if (
+            status === STATUS.STOPPED &&
+            secondsRemaining === 0 &&
+            count >= exercises.length - 1
+        ) {
+            return 'Exit'
+        }
+        if (count === exercises.length - 1) {
+            return 'FINISH'
+        }
+        return 'NEXT'
     }
 
     return (
@@ -168,31 +206,26 @@ export default function Workout({ workout }) {
                                 name='refweight'
                                 type='number'
                             />
-                            <select
-                                className={styles.difficultyInput}
-                                name='difficulty'
-                                id='difficulty'
-                            >
-                                <option value='easy'>Easy</option>
-                                <option value='hard'>Hard</option>
-                                <option value='brutal'>Brutal</option>
-                            </select>
                             <button
                                 className={styles.startButton}
                                 type='submit'
                             >
-                                Start
+                                Set
                             </button>
                         </form>
                     </div>
                 </div>
             ) : null}
             <h1 className={styles.workoutTitle}>{workout.title}</h1>
+            <div className={styles.hpBarBox}>
+                <p>HP</p>
+                <div className={styles.hpBar} style={{ width: health }}></div>
+            </div>
             <Exercise
                 count={count + 1}
                 exercise={currentExercise}
                 refWeight={refWeight}
-                difficulty={difficulty}
+                running={status === STATUS.STARTED || secondsRemaining === 0}
             />
             <div className={styles.countdownBox}>
                 <div className={styles.countdownField}>
@@ -206,7 +239,7 @@ export default function Workout({ workout }) {
                         handleNext()
                     }}
                 >
-                    Next Exercise
+                    {getButtonText()}
                 </button>
             </div>
         </React.Fragment>

@@ -37,12 +37,6 @@
     margin-bottom: 15px;
 }
 
-.difficultyInput {
-    display: block;
-    width: 50%;
-    margin-bottom: 15px;
-}
-
 .startButton {
     width: 50%;
     background-color: white;
@@ -83,4 +77,30 @@
         background-color: whitesmoke;
     }
     border-radius: 5px;
+}
+
+.hpBarBox {
+    position: relative;
+    width: 30%;
+    height: 30px;
+    border: 2px solid red;
+    margin: 20px auto;
+    p {
+        position: absolute;
+        width: 100%;
+        margin: 0;
+        z-index: 2;
+        text-align: center;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.418);
+    }
+}
+
+.hpBar {
+    position: absolute;
+    z-index: 1;
+    height: 28px;
+    left: 0;
+    top: 0;
+    background-color: red;
 }
