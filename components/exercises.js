@@ -1,8 +1,8 @@
 import React from 'react'
 import { Sets } from './sets'
-import styles from './excercises.module.scss'
+import styles from './exercises.module.scss'
 
-export const Excercises = ({
+export const Exercises = ({
     exercises,
     remove,
     doRemove,
@@ -17,7 +17,7 @@ export const Excercises = ({
             ? exercise.sets.items
             : exercise.sets
         return (
-            <div className={styles.excerciseBox} key={exercise.id}>
+            <div className={styles.exerciseBox} key={exercise.id}>
                 <p>Title: {exercise.title}</p>
                 <p>Description: {exercise.description}</p>
                 <p>Time: {exercise.time}</p>
@@ -37,11 +37,11 @@ export const Excercises = ({
     }
     return (
         <React.Fragment>
-            <div className={styles.excercisesContainer}>
+            <div className={styles.exercisesContainer}>
                 {exercises.map(exercise => generateExercise(exercise))}
             </div>
         </React.Fragment>
     )
 }
 
-export default Excercises
+export default Exercises

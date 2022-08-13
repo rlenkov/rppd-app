@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Authenticator } from '@aws-amplify/ui-react'
 import { Auth, withSSRContext, API } from 'aws-amplify'
-import { listExcercises, listWorkouts } from '../src/graphql/queries'
+import { useRouter } from 'next/router'
+import { listExercises, listWorkouts } from '../src/graphql/queries'
 import CreateWorkout from '../components/createWorkout'
 import Workouts from '../components/workouts'
 import { CacheContext } from '../src/extensions/context'
@@ -9,18 +10,19 @@ import { CacheContext } from '../src/extensions/context'
 export async function getServerSideProps({ req }) {
     // When on the server, use withSSRContext({ req?: ServerRequest }):
     const SSR = withSSRContext({ req })
-    const excerciseResponse = await SSR.API.graphql({ query: listExcercises })
+    const exerciseResponse = await SSR.API.graphql({ query: listExercises })
     const workResponse = await SSR.API.graphql({ query: listWorkouts })
 
     return {
         props: {
-            exs: excerciseResponse.data.listExcercises.items,
+            exs: exerciseResponse.data.listExercises.items,
             works: workResponse.data.listWorkouts.items,
         },
     }
 }
 
 const Admin = ({ exs = [], works = [] }) => {
+    const router = useRouter()
     const [contentBuffer, setContentBuffer] = useState({
         exercises: [],
         workouts: [],
@@ -47,10 +49,10 @@ const Admin = ({ exs = [], works = [] }) => {
         getCache()
     }
     const getCache = async () => {
-        const exerciseResponse = await API.graphql({ query: listExcercises })
+        const exerciseResponse = await API.graphql({ query: listExercises })
         const workResponse = await API.graphql({ query: listWorkouts })
         setContentBuffer({
-            exercises: exerciseResponse.data.listExcercises.items,
+            exercises: exerciseResponse.data.listExercises.items,
             workouts: workResponse.data.listWorkouts.items,
         })
     }
@@ -69,7 +71,13 @@ const Admin = ({ exs = [], works = [] }) => {
                             borderTop: '1px solid black',
                         }}
                     >
-                        <button type='button' onClick={() => Auth.signOut()}>
+                        <button
+                            type='button'
+                            onClick={() => {
+                                Auth.signOut()
+                                router.reload()
+                            }}
+                        >
                             Sign out
                         </button>
                     </div>

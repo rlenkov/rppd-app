@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react'
 import { utf8ToBase64 } from '../src/extensions/hash'
 import { API } from 'aws-amplify'
-import { createWorkout, createExcercise, createSet } from '../src/graphql/mutations'
-import CreateExcercise from './createExercise'
-import Excercises from '../components/excercises'
+import { createWorkout, createExercise, createSet } from '../src/graphql/mutations'
+import CreateExercise from './createExercise'
+import Exercises from './exercises'
 import { CacheContext } from '../src/extensions/context'
 import styles from './createWorkout.module.scss'
 
 const CreateWorkout = props => {
     const [rules, setRules] = useState([])
-    const [excercises, setExcercises] = useState([])
+    const [exercises, setExercises] = useState([])
     const { cache, refresh } = useContext(CacheContext)
 
     const handleAddRule = id => {
@@ -24,12 +24,12 @@ const CreateWorkout = props => {
     }
 
     const addExercise = ex => {
-        setExcercises([...excercises, ex])
+        setExercises([...exercises, ex])
     }
 
     const handleRemoveExercise = exId => {
-        const updatedEx = excercises.filter(ex => ex.id !== exId)
-        setExcercises(updatedEx)
+        const updatedEx = exercises.filter(ex => ex.id !== exId)
+        setExercises(updatedEx)
     }
 
     async function handleCreateWorkout(event) {
@@ -48,30 +48,30 @@ const CreateWorkout = props => {
                     },
                 },
             })
-            for (let i = 0; i < excercises.length; i++) {
-                const currentExcercise = excercises[i]
+            for (let i = 0; i < exercises.length; i++) {
+                const currentExercise = exercises[i]
                 const excData = await API.graphql({
                     authMode: 'AMAZON_COGNITO_USER_POOLS',
-                    query: createExcercise,
+                    query: createExercise,
                     variables: {
                         input: {
-                            workoutExcercisesId:
+                            workoutExercisesId:
                                 workoutData.data.createWorkout.id,
-                            title: currentExcercise.title,
-                            description: currentExcercise.description,
-                            time: currentExcercise.time,
+                            title: currentExercise.title,
+                            description: currentExercise.description,
+                            time: currentExercise.time,
                         },
                     },
                 })
-                for (let k = 0; k < currentExcercise.sets.length; k++) {
-                    const currentSet = currentExcercise.sets[k]
+                for (let k = 0; k < currentExercise.sets.length; k++) {
+                    const currentSet = currentExercise.sets[k]
                     await API.graphql({
                         authMode: 'AMAZON_COGNITO_USER_POOLS',
                         query: createSet,
                         variables: {
                             input: {
-                                excerciseSetsId:
-                                    excData.data.createExcercise.id,
+                                exerciseSetsId:
+                                    excData.data.createExercise.id,
                                 easy_description: currentSet.easy_description,
                                 hard_description: currentSet.hard_description,
                                 brutal_description:
@@ -90,7 +90,7 @@ const CreateWorkout = props => {
         }
         document.getElementById('workout-title-id').value = ''
         document.getElementById('workout-video-id').value = ''
-        setExcercises([])
+        setExercises([])
         setRules([])
         refresh()
     }
@@ -160,12 +160,12 @@ const CreateWorkout = props => {
                         </button>
                     </div>
                     <div>
-                        <p>Add Excercises</p>
+                        <p>Add Exercises</p>
                         <button
                             type='button'
                             onClick={() => {
                                 props.setModal(
-                                    <CreateExcercise
+                                    <CreateExercise
                                         setModal={props.setModal}
                                         addExercise={addExercise}
                                         doRemove
@@ -176,9 +176,9 @@ const CreateWorkout = props => {
                             Add Exercise
                         </button>
                         <p>Selected ones:</p>
-                        <div className={styles.excerciseBox}>
-                            <Excercises
-                                exercises={excercises}
+                        <div className={styles.exerciseBox}>
+                            <Exercises
+                                exercises={exercises}
                                 remove={handleRemoveExercise}
                             />
                         </div>

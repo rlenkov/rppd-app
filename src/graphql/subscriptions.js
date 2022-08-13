@@ -1,9 +1,9 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateExcercise = /* GraphQL */ `
-  subscription OnCreateExcercise($owner: String) {
-    onCreateExcercise(owner: $owner) {
+export const onCreateExercise = /* GraphQL */ `
+  subscription OnCreateExercise {
+    onCreateExercise {
       id
       title
       description
@@ -19,21 +19,19 @@ export const onCreateExcercise = /* GraphQL */ `
           brutal_multiplier
           createdAt
           updatedAt
-          excerciseSetsId
-          owner
+          exerciseSetsId
         }
         nextToken
       }
       createdAt
       updatedAt
-      workoutExcercisesId
-      owner
+      workoutExercisesId
     }
   }
 `;
-export const onUpdateExcercise = /* GraphQL */ `
-  subscription OnUpdateExcercise($owner: String) {
-    onUpdateExcercise(owner: $owner) {
+export const onUpdateExercise = /* GraphQL */ `
+  subscription OnUpdateExercise {
+    onUpdateExercise {
       id
       title
       description
@@ -49,21 +47,19 @@ export const onUpdateExcercise = /* GraphQL */ `
           brutal_multiplier
           createdAt
           updatedAt
-          excerciseSetsId
-          owner
+          exerciseSetsId
         }
         nextToken
       }
       createdAt
       updatedAt
-      workoutExcercisesId
-      owner
+      workoutExercisesId
     }
   }
 `;
-export const onDeleteExcercise = /* GraphQL */ `
-  subscription OnDeleteExcercise($owner: String) {
-    onDeleteExcercise(owner: $owner) {
+export const onDeleteExercise = /* GraphQL */ `
+  subscription OnDeleteExercise {
+    onDeleteExercise {
       id
       title
       description
@@ -79,21 +75,19 @@ export const onDeleteExcercise = /* GraphQL */ `
           brutal_multiplier
           createdAt
           updatedAt
-          excerciseSetsId
-          owner
+          exerciseSetsId
         }
         nextToken
       }
       createdAt
       updatedAt
-      workoutExcercisesId
-      owner
+      workoutExercisesId
     }
   }
 `;
 export const onCreateSet = /* GraphQL */ `
-  subscription OnCreateSet($owner: String) {
-    onCreateSet(owner: $owner) {
+  subscription OnCreateSet {
+    onCreateSet {
       id
       easy_description
       hard_description
@@ -103,14 +97,13 @@ export const onCreateSet = /* GraphQL */ `
       brutal_multiplier
       createdAt
       updatedAt
-      excerciseSetsId
-      owner
+      exerciseSetsId
     }
   }
 `;
 export const onUpdateSet = /* GraphQL */ `
-  subscription OnUpdateSet($owner: String) {
-    onUpdateSet(owner: $owner) {
+  subscription OnUpdateSet {
+    onUpdateSet {
       id
       easy_description
       hard_description
@@ -120,14 +113,13 @@ export const onUpdateSet = /* GraphQL */ `
       brutal_multiplier
       createdAt
       updatedAt
-      excerciseSetsId
-      owner
+      exerciseSetsId
     }
   }
 `;
 export const onDeleteSet = /* GraphQL */ `
-  subscription OnDeleteSet($owner: String) {
-    onDeleteSet(owner: $owner) {
+  subscription OnDeleteSet {
+    onDeleteSet {
       id
       easy_description
       hard_description
@@ -137,19 +129,18 @@ export const onDeleteSet = /* GraphQL */ `
       brutal_multiplier
       createdAt
       updatedAt
-      excerciseSetsId
-      owner
+      exerciseSetsId
     }
   }
 `;
 export const onCreateWorkout = /* GraphQL */ `
-  subscription OnCreateWorkout($owner: String) {
-    onCreateWorkout(owner: $owner) {
+  subscription OnCreateWorkout {
+    onCreateWorkout {
       id
       title
       video
       rules
-      excercises {
+      exercises {
         items {
           id
           title
@@ -166,32 +157,29 @@ export const onCreateWorkout = /* GraphQL */ `
               brutal_multiplier
               createdAt
               updatedAt
-              excerciseSetsId
-              owner
+              exerciseSetsId
             }
             nextToken
           }
           createdAt
           updatedAt
-          workoutExcercisesId
-          owner
+          workoutExercisesId
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onUpdateWorkout = /* GraphQL */ `
-  subscription OnUpdateWorkout($owner: String) {
-    onUpdateWorkout(owner: $owner) {
+  subscription OnUpdateWorkout {
+    onUpdateWorkout {
       id
       title
       video
       rules
-      excercises {
+      exercises {
         items {
           id
           title
@@ -208,32 +196,29 @@ export const onUpdateWorkout = /* GraphQL */ `
               brutal_multiplier
               createdAt
               updatedAt
-              excerciseSetsId
-              owner
+              exerciseSetsId
             }
             nextToken
           }
           createdAt
           updatedAt
-          workoutExcercisesId
-          owner
+          workoutExercisesId
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onDeleteWorkout = /* GraphQL */ `
-  subscription OnDeleteWorkout($owner: String) {
-    onDeleteWorkout(owner: $owner) {
+  subscription OnDeleteWorkout {
+    onDeleteWorkout {
       id
       title
       video
       rules
-      excercises {
+      exercises {
         items {
           id
           title
@@ -250,21 +235,18 @@ export const onDeleteWorkout = /* GraphQL */ `
               brutal_multiplier
               createdAt
               updatedAt
-              excerciseSetsId
-              owner
+              exerciseSetsId
             }
             nextToken
           }
           createdAt
           updatedAt
-          workoutExcercisesId
-          owner
+          workoutExercisesId
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;

@@ -2,12 +2,12 @@ import React, { useContext } from 'react'
 import { API } from 'aws-amplify'
 import {
     deleteWorkout,
-    deleteExcercise,
+    deleteExercise,
     deleteSet,
 } from '../src/graphql/mutations'
 import { utf8ToBase64 } from '../src/extensions/hash'
 import { CacheContext } from '../src/extensions/context'
-import Excercises from '../components/excercises'
+import Exercises from './exercises'
 import styles from './workouts.module.scss'
 
 const Workouts = () => {
@@ -22,16 +22,16 @@ const Workouts = () => {
                 },
             })
             for (let i = 0; i < exercises.length; i++) {
-                const currentExcercise = exercises[i]
+                const currentExercise = exercises[i]
                 await API.graphql({
                     authMode: 'AMAZON_COGNITO_USER_POOLS',
-                    query: deleteExcercise,
+                    query: deleteExercise,
                     variables: {
-                        input: { id: currentExcercise.id },
+                        input: { id: currentExercise.id },
                     },
                 })
-                for (let k = 0; k < currentExcercise.sets.items.length; k++) {
-                    const currentSet = currentExcercise.sets.items[k]
+                for (let k = 0; k < currentExercise.sets.items.length; k++) {
+                    const currentSet = currentExercise.sets.items[k]
                     await API.graphql({
                         authMode: 'AMAZON_COGNITO_USER_POOLS',
                         query: deleteSet,
@@ -68,9 +68,9 @@ const Workouts = () => {
                     </div>
                 </div>
                 <div>
-                    <p>Excercises:</p>
-                    <Excercises
-                        exercises={workout.excercises.items}
+                    <p>Exercises:</p>
+                    <Exercises
+                        exercises={workout.exercises.items}
                         remove={() => {}}
                     />
                 </div>
@@ -80,7 +80,7 @@ const Workouts = () => {
                         handleDelete(
                             workout.id,
                             workout.title,
-                            workout.excercises.items,
+                            workout.exercises.items,
                         )
                     }
                 >

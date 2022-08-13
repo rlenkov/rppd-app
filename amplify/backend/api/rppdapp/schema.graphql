@@ -1,31 +1,46 @@
-type Excercise
-  @model
-  @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
-  id: ID!
-  title: String!
-  description: String!
-  time: Int!
-  sets: [Set] @hasMany
+type Exercise
+    @model
+    @auth(
+        rules: [
+            { allow: groups, groups: ["admin"] }
+            { allow: public, operations: [read] }
+        ]
+    ) {
+    id: ID!
+    title: String!
+    description: String!
+    time: Int!
+    sets: [Set] @hasMany
 }
 
 type Set
-  @model
-  @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
-  id: ID!
-  easy_description: String!
-  hard_description: String!
-  brutal_description: String!
-  easy_multiplier: Int!
-  hard_multiplier: Int!
-  brutal_multiplier: Int!
+    @model
+    @auth(
+        rules: [
+            { allow: groups, groups: ["admin"] }
+            { allow: public, operations: [read] }
+        ]
+    ) {
+    id: ID!
+    easy_description: String!
+    hard_description: String!
+    brutal_description: String!
+    easy_multiplier: Int!
+    hard_multiplier: Int!
+    brutal_multiplier: Int!
 }
 
 type Workout
-  @model
-  @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
-  id: ID!
-  title: String!
-  video: String!
-  rules: [String]
-  excercises: [Excercise] @hasMany
+    @model
+    @auth(
+        rules: [
+            { allow: groups, groups: ["admin"] }
+            { allow: public, operations: [read] }
+        ]
+    ) {
+    id: ID!
+    title: String!
+    video: String!
+    rules: [String]
+    exercises: [Exercise] @hasMany
 }

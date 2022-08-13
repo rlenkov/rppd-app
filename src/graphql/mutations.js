@@ -1,12 +1,12 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createExcercise = /* GraphQL */ `
-  mutation CreateExcercise(
-    $input: CreateExcerciseInput!
-    $condition: ModelExcerciseConditionInput
+export const createExercise = /* GraphQL */ `
+  mutation CreateExercise(
+    $input: CreateExerciseInput!
+    $condition: ModelExerciseConditionInput
   ) {
-    createExcercise(input: $input, condition: $condition) {
+    createExercise(input: $input, condition: $condition) {
       id
       title
       description
@@ -22,24 +22,22 @@ export const createExcercise = /* GraphQL */ `
           brutal_multiplier
           createdAt
           updatedAt
-          excerciseSetsId
-          owner
+          exerciseSetsId
         }
         nextToken
       }
       createdAt
       updatedAt
-      workoutExcercisesId
-      owner
+      workoutExercisesId
     }
   }
 `;
-export const updateExcercise = /* GraphQL */ `
-  mutation UpdateExcercise(
-    $input: UpdateExcerciseInput!
-    $condition: ModelExcerciseConditionInput
+export const updateExercise = /* GraphQL */ `
+  mutation UpdateExercise(
+    $input: UpdateExerciseInput!
+    $condition: ModelExerciseConditionInput
   ) {
-    updateExcercise(input: $input, condition: $condition) {
+    updateExercise(input: $input, condition: $condition) {
       id
       title
       description
@@ -55,24 +53,22 @@ export const updateExcercise = /* GraphQL */ `
           brutal_multiplier
           createdAt
           updatedAt
-          excerciseSetsId
-          owner
+          exerciseSetsId
         }
         nextToken
       }
       createdAt
       updatedAt
-      workoutExcercisesId
-      owner
+      workoutExercisesId
     }
   }
 `;
-export const deleteExcercise = /* GraphQL */ `
-  mutation DeleteExcercise(
-    $input: DeleteExcerciseInput!
-    $condition: ModelExcerciseConditionInput
+export const deleteExercise = /* GraphQL */ `
+  mutation DeleteExercise(
+    $input: DeleteExerciseInput!
+    $condition: ModelExerciseConditionInput
   ) {
-    deleteExcercise(input: $input, condition: $condition) {
+    deleteExercise(input: $input, condition: $condition) {
       id
       title
       description
@@ -88,15 +84,13 @@ export const deleteExcercise = /* GraphQL */ `
           brutal_multiplier
           createdAt
           updatedAt
-          excerciseSetsId
-          owner
+          exerciseSetsId
         }
         nextToken
       }
       createdAt
       updatedAt
-      workoutExcercisesId
-      owner
+      workoutExercisesId
     }
   }
 `;
@@ -115,8 +109,7 @@ export const createSet = /* GraphQL */ `
       brutal_multiplier
       createdAt
       updatedAt
-      excerciseSetsId
-      owner
+      exerciseSetsId
     }
   }
 `;
@@ -135,8 +128,7 @@ export const updateSet = /* GraphQL */ `
       brutal_multiplier
       createdAt
       updatedAt
-      excerciseSetsId
-      owner
+      exerciseSetsId
     }
   }
 `;
@@ -155,8 +147,7 @@ export const deleteSet = /* GraphQL */ `
       brutal_multiplier
       createdAt
       updatedAt
-      excerciseSetsId
-      owner
+      exerciseSetsId
     }
   }
 `;
@@ -170,7 +161,7 @@ export const createWorkout = /* GraphQL */ `
       title
       video
       rules
-      excercises {
+      exercises {
         items {
           id
           title
@@ -187,21 +178,18 @@ export const createWorkout = /* GraphQL */ `
               brutal_multiplier
               createdAt
               updatedAt
-              excerciseSetsId
-              owner
+              exerciseSetsId
             }
             nextToken
           }
           createdAt
           updatedAt
-          workoutExcercisesId
-          owner
+          workoutExercisesId
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -215,7 +203,7 @@ export const updateWorkout = /* GraphQL */ `
       title
       video
       rules
-      excercises {
+      exercises {
         items {
           id
           title
@@ -232,21 +220,18 @@ export const updateWorkout = /* GraphQL */ `
               brutal_multiplier
               createdAt
               updatedAt
-              excerciseSetsId
-              owner
+              exerciseSetsId
             }
             nextToken
           }
           createdAt
           updatedAt
-          workoutExcercisesId
-          owner
+          workoutExercisesId
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -260,7 +245,7 @@ export const deleteWorkout = /* GraphQL */ `
       title
       video
       rules
-      excercises {
+      exercises {
         items {
           id
           title
@@ -277,21 +262,18 @@ export const deleteWorkout = /* GraphQL */ `
               brutal_multiplier
               createdAt
               updatedAt
-              excerciseSetsId
-              owner
+              exerciseSetsId
             }
             nextToken
           }
           createdAt
           updatedAt
-          workoutExcercisesId
-          owner
+          workoutExercisesId
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;

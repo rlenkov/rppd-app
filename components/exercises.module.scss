@@ -1,11 +1,11 @@
-.excercisesContainer {
+.exercisesContainer {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     padding: 15px;
 }
 
-.excerciseBox {
+.exerciseBox {
     flex-grow: 1;
     border: 1px solid black;
     margin: 5px;

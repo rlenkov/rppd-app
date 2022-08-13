@@ -1,9 +1,9 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getExcercise = /* GraphQL */ `
-  query GetExcercise($id: ID!) {
-    getExcercise(id: $id) {
+export const getExercise = /* GraphQL */ `
+  query GetExercise($id: ID!) {
+    getExercise(id: $id) {
       id
       title
       description
@@ -19,25 +19,23 @@ export const getExcercise = /* GraphQL */ `
           brutal_multiplier
           createdAt
           updatedAt
-          excerciseSetsId
-          owner
+          exerciseSetsId
         }
         nextToken
       }
       createdAt
       updatedAt
-      workoutExcercisesId
-      owner
+      workoutExercisesId
     }
   }
 `;
-export const listExcercises = /* GraphQL */ `
-  query ListExcercises(
-    $filter: ModelExcerciseFilterInput
+export const listExercises = /* GraphQL */ `
+  query ListExercises(
+    $filter: ModelExerciseFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listExcercises(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listExercises(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         title
@@ -54,15 +52,13 @@ export const listExcercises = /* GraphQL */ `
             brutal_multiplier
             createdAt
             updatedAt
-            excerciseSetsId
-            owner
+            exerciseSetsId
           }
           nextToken
         }
         createdAt
         updatedAt
-        workoutExcercisesId
-        owner
+        workoutExercisesId
       }
       nextToken
     }
@@ -80,8 +76,7 @@ export const getSet = /* GraphQL */ `
       brutal_multiplier
       createdAt
       updatedAt
-      excerciseSetsId
-      owner
+      exerciseSetsId
     }
   }
 `;
@@ -102,8 +97,7 @@ export const listSets = /* GraphQL */ `
         brutal_multiplier
         createdAt
         updatedAt
-        excerciseSetsId
-        owner
+        exerciseSetsId
       }
       nextToken
     }
@@ -116,7 +110,7 @@ export const getWorkout = /* GraphQL */ `
       title
       video
       rules
-      excercises {
+      exercises {
         items {
           id
           title
@@ -133,21 +127,18 @@ export const getWorkout = /* GraphQL */ `
               brutal_multiplier
               createdAt
               updatedAt
-              excerciseSetsId
-              owner
+              exerciseSetsId
             }
             nextToken
           }
           createdAt
           updatedAt
-          workoutExcercisesId
-          owner
+          workoutExercisesId
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -163,7 +154,7 @@ export const listWorkouts = /* GraphQL */ `
         title
         video
         rules
-        excercises {
+        exercises {
           items {
             id
             title
@@ -180,21 +171,18 @@ export const listWorkouts = /* GraphQL */ `
                 brutal_multiplier
                 createdAt
                 updatedAt
-                excerciseSetsId
-                owner
+                exerciseSetsId
               }
               nextToken
             }
             createdAt
             updatedAt
-            workoutExcercisesId
-            owner
+            workoutExercisesId
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }

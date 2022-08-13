@@ -71,8 +71,8 @@ const twoDigits = num => String(num).padStart(2, '0')
 
 export default function Workout({ workout }) {
     const initEx = () => {
-        if (workout && workout.excercises) {
-            return workout.excercises.items
+        if (workout && workout.exercises) {
+            return workout.exercises.items
         }
         return []
     }
@@ -126,7 +126,7 @@ export default function Workout({ workout }) {
     )
 
     useEffect(() => {
-        setExercises(workout.excercises.items)
+        setExercises(workout.exercises.items)
     }, [workout])
 
     if (router.isFallback) {
