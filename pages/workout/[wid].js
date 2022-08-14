@@ -126,7 +126,7 @@ export default function Workout({ workout }) {
     )
 
     useEffect(() => {
-        setExercises(workout.exercises.items)
+        setExercises(initEx())
     }, [workout])
 
     if (router.isFallback) {

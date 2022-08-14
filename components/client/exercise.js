@@ -1,11 +1,20 @@
 import React, { useState } from 'react'
 import styles from './exercise.module.scss'
 
-export const Exercise = ({ exercise, count, refWeight = null, running = false }) => {
+export const Exercise = ({
+    exercise = {},
+    count = 0,
+    refWeight = null,
+    running = false,
+}) => {
     const generateExercise = () => {
-        const setsArray = exercise.sets.items
-            ? exercise.sets.items
-            : exercise.sets
+        let setsArray = []
+        if (exercise.sets) {
+            setsArray = exercise.sets.items
+                ? exercise.sets.items
+                : exercise.sets
+        }
+
         return (
             <div className={styles.exerciseBox}>
                 <h2 className={styles.exerciseTitle}>
@@ -14,7 +23,12 @@ export const Exercise = ({ exercise, count, refWeight = null, running = false })
                 <p className={styles.exerciseDesc}>{exercise.description}</p>
                 <h3 className={styles.exerciseSets}>Sets:</h3>
                 {setsArray.map((set, index) => (
-                    <Set set={set} refWeight={refWeight} num={index + 1} disabled={running} />
+                    <Set
+                        set={set}
+                        refWeight={refWeight}
+                        num={index + 1}
+                        disabled={running}
+                    />
                 ))}
             </div>
         )
