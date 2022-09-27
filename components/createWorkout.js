@@ -180,6 +180,7 @@ const CreateWorkout = props => {
                             <Exercises
                                 exercises={exercises}
                                 remove={handleRemoveExercise}
+                                doRemove
                             />
                         </div>
                     </div>
