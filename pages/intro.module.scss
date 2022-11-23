@@ -40,6 +40,27 @@
         background-color: whitesmoke;
     }
     border-radius: 5px;
+    
+    display: inline-block;
+    outline: 0;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    padding: 9px 22px;
+    font-size: 22px;
+    font-family: fantasy;
+    height: 50px;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    line-height: normal;
+    background: linear-gradient(90deg,#5522fa 0,#0074e4 100%);
+    border-radius: 50px;
+    transition: color .2s ease,background-color .2s ease,box-shadow .2s ease;
+    :hover{
+        box-shadow: 0 0 0 0.15rem #5ceace;
+    }
+    
 }
 
 .backButton {
@@ -63,6 +84,10 @@
     padding: 20px;
     height: 50%;
     text-align: center;
+    background: #e0e0e0;
+ box-shadow: 15px 15px 30px #bebebe,
+             -15px -15px 30px #ffffff;
+             font-family: fantasy;
 }
 
 // LOADER:

@@ -1,19 +1,26 @@
 .container {
-    padding: 50px 50px;
-    display: flex;
-    flex-direction: column;
-
-}
-
-.card {
-  width: 100%;
-  border: 2px solid grey;
-  border-radius: 12px;
-  margin-bottom: 30px;
-  padding: 10px;
+    
+ 
+  
+  outline: 0;
   text-align: center;
-  &:hover {
-    background-color: grey;
-  }
   cursor: pointer;
+  padding: 17px 30px;
+  border: 0;
+  color: #fff;
+  font-size: 17.5px;
+  border: 2px solid transparent;
+  border-color: #000;
+  color: #000;
+  background: transparent;
+  font-weight: 800;
+  line-height: 30px;
+  transition: background,color .1s ease-in-out;
+  :hover {
+      background-color: rgb(255, 251, 251);
+      color: rgb(12, 11, 11);
+  }
+  
+
+
 }

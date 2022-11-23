@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
                 <link rel='icon' href='/favicon.ico' />
             </Head>
             <header className={styles.mainHeader}>
-                <h1>Rppd!</h1>
+                <h1>The Jacked Nerd</h1>
             </header>
             <main className={styles.container}>{children}</main>
             <footer className={styles.mainFooter}>

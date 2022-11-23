@@ -117,8 +117,9 @@ export default function Workout({ workout }) {
             if (secondsRemaining > 0) {
                 setSecondsRemaining(secondsRemaining - 1)
             } else {
-                handleStop()
+                handleNext()
                 alert("You've run out of time!")
+                handleStart()
             }
         },
         status === STATUS.STARTED ? 1000 : null,
@@ -155,6 +156,7 @@ export default function Workout({ workout }) {
             if (count < exercises.length - 1) {
                 setCount(count + 1)
                 setSecondsRemaining(currentExercise ? currentExercise.time : 0)
+                handleStart()
             } else {
                 setHealth('1%')
                 setSecondsRemaining(0)
@@ -200,6 +202,7 @@ export default function Workout({ workout }) {
                             className={styles.modalForm}
                             onSubmit={handleSetRefWeight}
                         >
+                            <p>Max BenchPress</p>
                             <input
                                 className={styles.refWeightInput}
                                 placeholder={`Input your reference weight`}
@@ -218,7 +221,7 @@ export default function Workout({ workout }) {
             ) : null}
             <h1 className={styles.workoutTitle}>{workout.title}</h1>
             <div className={styles.hpBarBox}>
-                <p>HP</p>
+                <p>Progress</p>
                 <div className={styles.hpBar} style={{ width: health }}></div>
             </div>
             <Exercise

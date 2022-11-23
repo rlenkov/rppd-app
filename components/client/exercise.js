@@ -115,7 +115,6 @@ const Set = ({ set, refWeight, num, disabled = false }) => {
                     className={styles.difficultyInput}
                     name='difficulty'
                     id='difficulty'
-                    disabled={disabled}
                 >
                     <option value='easy'>Easy</option>
                     <option value='hard'>Hard</option>
