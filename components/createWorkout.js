@@ -9,6 +9,7 @@ import styles from './createWorkout.module.scss'
 
 const CreateWorkout = props => {
     const [rules, setRules] = useState([])
+    const [refweights, setRefweights] = useState([])
     const [exercises, setExercises] = useState([])
     const { cache, refresh } = useContext(CacheContext)
 
@@ -21,6 +22,17 @@ const CreateWorkout = props => {
     const handleRemoveRule = ruleText => {
         const updatedRules = rules.filter(rule => rule !== ruleText)
         setRules(updatedRules)
+    }
+
+    const handleAddRefweight = id => {
+        const elem = document.getElementById(id)
+        setRefweights([...refweights, elem.value])
+        elem.value = ''
+    }
+
+    const handleRemoveRefweight = refText => {
+        const updatedRefweights = refweights.filter(ref => ref !== refText)
+        setRefweights(updatedRefweights)
     }
 
     const addExercise = ex => {
@@ -45,6 +57,7 @@ const CreateWorkout = props => {
                         title: form.get('title'),
                         video: form.get('video'),
                         rules: rules,
+                        ref_weights: refweights,
                     },
                 },
             })
@@ -60,6 +73,7 @@ const CreateWorkout = props => {
                             title: currentExercise.title,
                             description: currentExercise.description,
                             time: currentExercise.time,
+                            ref_weight: currentExercise.refweight,
                         },
                     },
                 })
@@ -160,6 +174,46 @@ const CreateWorkout = props => {
                         </button>
                     </div>
                     <div>
+                    <p>Refweights:</p>
+                        <div className={styles.ruleBox}>
+                            {refweights.map(refweight => (
+                                <p
+                                    className={styles.rule}
+                                    key={`key-${utf8ToBase64(refweight)}`}
+                                >
+                                    {refweight}{' '}
+                                    <span
+                                        className={styles.ruleRemove}
+                                        onClick={() => {
+                                            handleRemoveRefweight(refweight)
+                                        }}
+                                    >
+                                        X
+                                    </span>
+                                </p>
+                            ))}
+                        </div>
+                    <fieldset>
+                            <legend>Add new refweight name:</legend>
+                            <textarea
+                                className={styles.rulesInput}
+                                placeholder={`Add new Refweight name`}
+                                name='refweight'
+                                type='text'
+                                id='refweight-input-field'
+                                rows={1}
+                            />
+                        </fieldset>
+                        <button
+                            type='button'
+                            onClick={() => {
+                                handleAddRefweight('refweight-input-field')
+                            }}
+                        >
+                            Add Refweight
+                        </button>
+                    </div>
+                    <div>
                         <p>Add Exercises</p>
                         <button
                             type='button'
@@ -168,6 +222,7 @@ const CreateWorkout = props => {
                                     <CreateExercise
                                         setModal={props.setModal}
                                         addExercise={addExercise}
+                                        refweights={refweights}
                                         doRemove
                                     />,
                                 )

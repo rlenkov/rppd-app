@@ -9,6 +9,7 @@ type Exercise
     id: ID!
     title: String!
     description: String!
+    ref_weight: String!
     time: Int!
     sets: [Set] @hasMany
 }
@@ -42,5 +43,6 @@ type Workout
     title: String!
     video: String!
     rules: [String]
+    ref_weights: [String]
     exercises: [Exercise] @hasMany
 }

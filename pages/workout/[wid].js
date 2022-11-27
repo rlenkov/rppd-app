@@ -82,7 +82,7 @@ export default function Workout({ workout }) {
         const exerciseNumber = exercises.length
         const equalParts = Math.floor(maxHealth / exerciseNumber)
         const remainder = maxHealth % exerciseNumber
-        const progressMinus = count * equalParts
+        const progressMinus = successCount * equalParts
         let progress = 100 - progressMinus
         if (progress - remainder === 0) {
             progress = 1
@@ -93,13 +93,14 @@ export default function Workout({ workout }) {
     const router = useRouter()
     const [exercises, setExercises] = useState(initEx())
     const [count, setCount] = useState(0)
+    const [successCount, setSuccessCount] = useState(0)
     const [health, setHealth] = useState(calculateHealth())
     const currentExercise = exercises[count]
     const [secondsRemaining, setSecondsRemaining] = useState(
         currentExercise ? currentExercise.time : 0,
     )
     const [status, setStatus] = useState(STATUS.STOPPED)
-    const [refWeight, setRefWeight] = useState(null)
+    const [refWeight, setRefWeight] = useState({})
 
     const secondsToDisplay = secondsRemaining % 60
     const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60
@@ -140,7 +141,7 @@ export default function Workout({ workout }) {
 
     useEffect(() => {
         setHealth(calculateHealth())
-    }, [count])
+    }, [successCount])
 
     const handleNext = () => {
         if (secondsRemaining !== 0 && status === STATUS.STOPPED) {
@@ -158,18 +159,27 @@ export default function Workout({ workout }) {
                 setSecondsRemaining(currentExercise ? currentExercise.time : 0)
                 handleStart()
             } else {
-                setHealth('1%')
-                setSecondsRemaining(0)
-                alert('Congrats, you have won!')
+                if (successCount === count) {
+                    setHealth('1%')
+                    alert('Congrats, you have won!')
+                    setSecondsRemaining(0)
+                } else {
+                    setHealth('1%')
+                    alert('Maybe next time motherfucker')
+                    setSecondsRemaining(0)
+                }
             }
         }
     }
 
-    const handleSetRefWeight = event => {
+    const handleSetRefWeight = (event, ref_weights) => {
         event.preventDefault()
         const form = new FormData(event.target)
-        const refWeightData = form.get('refweight')
-        if (!refWeightData) {
+        const refWeightData = {}
+        ref_weights.forEach((ref) => {
+            refWeightData[ref] = form.get(ref)
+        })  
+        if (Object.values(refWeightData).includes('')) {
             alert('Please provide a reference weight!')
         } else {
             setRefWeight(refWeightData)
@@ -195,20 +205,27 @@ export default function Workout({ workout }) {
 
     return (
         <React.Fragment>
-            {refWeight === null ? (
+            {Object.keys(refWeight).length === 0 ? (
                 <div className={styles.modal}>
                     <div className={styles.modalBox}>
                         <form
                             className={styles.modalForm}
-                            onSubmit={handleSetRefWeight}
+                            onSubmit={
+                                (event) => { handleSetRefWeight(event, workout.ref_weights) }
+                            }
+
                         >
-                            <p>Max BenchPress</p>
-                            <input
-                                className={styles.refWeightInput}
-                                placeholder={`Input your reference weight`}
-                                name='refweight'
-                                type='number'
-                            />
+                            <p>INPUT YOUR REFERENCE WEIGHTS</p>
+                            {workout.ref_weights.map((refName) => {
+                                return (
+                                    <input
+                                        className={styles.refWeightInput}
+                                        placeholder={`Input your ${refName}`}
+                                        name={refName}
+                                        type='number'
+                                    />
+                                )
+                            })}
                             <button
                                 className={styles.startButton}
                                 type='submit'
@@ -240,6 +257,9 @@ export default function Workout({ workout }) {
                     type='button'
                     onClick={() => {
                         handleNext()
+                        if (status !== STATUS.STOPPED && secondsRemaining !== 0) {
+                            setSuccessCount(successCount + 1)
+                        }
                     }}
                 >
                     {getButtonText()}

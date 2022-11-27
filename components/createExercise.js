@@ -55,6 +55,7 @@ const CreateExcercise = props => {
             title: form.get('title'),
             description: form.get('description'),
             time: form.get('time'),
+            refweight: form.get('refweight'),
             sets: sets,
         }
 
@@ -104,6 +105,14 @@ const CreateExcercise = props => {
                                 id='exercise-time-id'
                             />
                         </fieldset>
+                        <select
+                            name='refweight'
+                            id='refweight'
+                        >
+                            {props.refweights.map((ref) => {
+                                return (<option value={ref}>{ref}</option>)
+                            })}
+                        </select>
                         <div className={styles.setContainer}>
                             <Sets sets={sets} />
                             <fieldset>

@@ -4,7 +4,7 @@ import styles from './exercise.module.scss'
 export const Exercise = ({
     exercise = {},
     count = 0,
-    refWeight = null,
+    refWeight = {},
     running = false,
 }) => {
     const generateExercise = () => {
@@ -26,6 +26,7 @@ export const Exercise = ({
                     <Set
                         set={set}
                         refWeight={refWeight}
+                        refWeightName={exercise.ref_weight}
                         num={index + 1}
                         disabled={running}
                     />
@@ -40,9 +41,10 @@ export const Exercise = ({
     )
 }
 
-const Set = ({ set, refWeight, num, disabled = false }) => {
+export const Set = ({ set, refWeight, refWeightName, num, disabled = false }) => {
     const getWeight = multiplier => {
-        return refWeight ? Math.ceil(refWeight * (multiplier / 100)) : 0
+        const correspondingRefWeight = refWeight[refWeightName]
+        return correspondingRefWeight ? Math.ceil(correspondingRefWeight * (multiplier / 100)) : 0
     }
     const [difficulty, setDifficulty] = useState('easy')
 

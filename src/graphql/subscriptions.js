@@ -7,6 +7,7 @@ export const onCreateExercise = /* GraphQL */ `
       id
       title
       description
+      ref_weight
       time
       sets {
         items {
@@ -35,6 +36,7 @@ export const onUpdateExercise = /* GraphQL */ `
       id
       title
       description
+      ref_weight
       time
       sets {
         items {
@@ -63,6 +65,7 @@ export const onDeleteExercise = /* GraphQL */ `
       id
       title
       description
+      ref_weight
       time
       sets {
         items {
@@ -140,11 +143,13 @@ export const onCreateWorkout = /* GraphQL */ `
       title
       video
       rules
+      ref_weights
       exercises {
         items {
           id
           title
           description
+          ref_weight
           time
           sets {
             items {
@@ -179,11 +184,13 @@ export const onUpdateWorkout = /* GraphQL */ `
       title
       video
       rules
+      ref_weights
       exercises {
         items {
           id
           title
           description
+          ref_weight
           time
           sets {
             items {
@@ -218,11 +225,13 @@ export const onDeleteWorkout = /* GraphQL */ `
       title
       video
       rules
+      ref_weights
       exercises {
         items {
           id
           title
           description
+          ref_weight
           time
           sets {
             items {

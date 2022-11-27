@@ -21,6 +21,7 @@ export const Exercises = ({
                 <p>Title: {exercise.title}</p>
                 <p>Description: {exercise.description}</p>
                 <p>Time: {exercise.time}</p>
+                <p>Refweight: {exercise.ref_weight}</p>
                 <Sets sets={setsArray} refWeight={refWeight} />
                 {doRemove ? (
                     <button

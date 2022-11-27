@@ -66,6 +66,14 @@ const Workouts = () => {
                                 <p key={utf8ToBase64(rule)}>- {rule}</p>
                             ))}
                     </div>
+                    <p>Refweights:</p>
+                    <div>
+                        {workout.ref_weights
+                            .filter(r => r !== null)
+                            .map(ref => (
+                                <p key={utf8ToBase64(ref)}>- {ref}</p>
+                            ))}
+                    </div>
                 </div>
                 <div>
                     <p>Exercises:</p>

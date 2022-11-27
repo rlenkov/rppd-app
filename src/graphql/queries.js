@@ -7,6 +7,7 @@ export const getExercise = /* GraphQL */ `
       id
       title
       description
+      ref_weight
       time
       sets {
         items {
@@ -40,6 +41,7 @@ export const listExercises = /* GraphQL */ `
         id
         title
         description
+        ref_weight
         time
         sets {
           items {
@@ -110,11 +112,13 @@ export const getWorkout = /* GraphQL */ `
       title
       video
       rules
+      ref_weights
       exercises {
         items {
           id
           title
           description
+          ref_weight
           time
           sets {
             items {
@@ -154,11 +158,13 @@ export const listWorkouts = /* GraphQL */ `
         title
         video
         rules
+        ref_weights
         exercises {
           items {
             id
             title
             description
+            ref_weight
             time
             sets {
               items {
