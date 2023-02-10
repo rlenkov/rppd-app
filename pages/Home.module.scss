@@ -1,26 +1,29 @@
 .container {
-    
- 
-  
-  outline: 0;
-  text-align: center;
-  cursor: pointer;
-  padding: 17px 30px;
-  border: 0;
-  color: #fff;
-  font-size: 17.5px;
-  border: 2px solid transparent;
-  border-color: #000;
-  color: #000;
-  background: transparent;
-  font-weight: 800;
-  line-height: 30px;
-  transition: background,color .1s ease-in-out;
-  :hover {
-      background-color: rgb(255, 251, 251);
-      color: rgb(12, 11, 11);
-  }
-  
+    outline: 0;
+    text-align: center;
+    cursor: pointer;
+    padding: 17px 30px;
+    border: 0;
+    color: #fff;
+    font-size: 17.5px;
+    border: 2px solid transparent;
+    border-color: #000;
+    color: #000;
+    background: transparent;
+    font-weight: 800;
+    line-height: 30px;
+    transition: background, color 0.1s ease-in-out;
+    :hover {
+        background-color: rgb(255, 251, 251);
+        color: rgb(12, 11, 11);
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-
+.card {
+  margin-bottom: 20px;
+  min-width: 20%;
 }

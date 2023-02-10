@@ -72,7 +72,17 @@ const twoDigits = num => String(num).padStart(2, '0')
 export default function Workout({ workout }) {
     const initEx = () => {
         if (workout && workout.exercises) {
-            return workout.exercises.items
+            return workout.exercises.items.sort((a, b) => {
+                const dateA = new Date(a.updatedAt)
+                const dateB = new Date(b.updatedAt)
+                if (dateA.getTime() < dateB.getTime()) {
+                    return -1;
+                  }
+                  if (dateA.getTime() > dateB.getTime()) {
+                    return 1;
+                  }
+                  return 0;
+            })
         }
         return []
     }
@@ -176,9 +186,9 @@ export default function Workout({ workout }) {
         event.preventDefault()
         const form = new FormData(event.target)
         const refWeightData = {}
-        ref_weights.forEach((ref) => {
+        ref_weights.forEach(ref => {
             refWeightData[ref] = form.get(ref)
-        })  
+        })
         if (Object.values(refWeightData).includes('')) {
             alert('Please provide a reference weight!')
         } else {
@@ -210,13 +220,12 @@ export default function Workout({ workout }) {
                     <div className={styles.modalBox}>
                         <form
                             className={styles.modalForm}
-                            onSubmit={
-                                (event) => { handleSetRefWeight(event, workout.ref_weights) }
-                            }
-
+                            onSubmit={event => {
+                                handleSetRefWeight(event, workout.ref_weights)
+                            }}
                         >
                             <p>INPUT YOUR REFERENCE WEIGHTS</p>
-                            {workout.ref_weights.map((refName) => {
+                            {workout.ref_weights.map(refName => {
                                 return (
                                     <input
                                         className={styles.refWeightInput}
@@ -257,7 +266,10 @@ export default function Workout({ workout }) {
                     type='button'
                     onClick={() => {
                         handleNext()
-                        if (status !== STATUS.STOPPED && secondsRemaining !== 0) {
+                        if (
+                            status !== STATUS.STOPPED &&
+                            secondsRemaining !== 0
+                        ) {
                             setSuccessCount(successCount + 1)
                         }
                     }}
