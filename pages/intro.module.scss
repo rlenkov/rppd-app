@@ -1,7 +1,7 @@
 .modalBackground {
     position: relative;
     z-index: 5;
-    background-color: white;
+    background-color: rgb(223, 222, 222);
     position: fixed;
     top: 0;
     left: 0;
@@ -36,9 +36,6 @@
     padding: 10px;
     background-color: white;
     cursor: pointer;
-    &:hover {
-        background-color: whitesmoke;
-    }
     border-radius: 5px;
     
     display: inline-block;
@@ -51,10 +48,10 @@
     font-family: fantasy;
     height: 50px;
     font-weight: 400;
-    color: #fff;
+    color: antiquewhite;
     text-align: center;
     line-height: normal;
-    background: linear-gradient(90deg,#5522fa 0,#0074e4 100%);
+    background: #17223b;
     border-radius: 50px;
     transition: color .2s ease,background-color .2s ease,box-shadow .2s ease;
     :hover{
@@ -82,12 +79,13 @@
     border: 2px solid black;
     border-radius: 10px;
     padding: 20px;
-    height: 50%;
+    height: 70%;
     text-align: center;
-    background: #e0e0e0;
- box-shadow: 15px 15px 30px #bebebe,
-             -15px -15px 30px #ffffff;
-             font-family: fantasy;
+    background: #fffdfd;
+ box-shadow: 5px 5px 15px #bebebe,
+             -5px -5px 15px #ffffff;
+             font-family: 'Heron Sans';
+             font-weight: bold;
 }
 
 // LOADER:

@@ -11,7 +11,17 @@ export const Exercise = ({
         let setsArray = []
         if (exercise.sets) {
             setsArray = exercise.sets.items
-                ? exercise.sets.items
+                ? exercise.sets.items.sort((a, b) => {
+                    const dateA = new Date(a.updatedAt)
+                    const dateB = new Date(b.updatedAt)
+                    if (dateA.getTime() < dateB.getTime()) {
+                        return -1;
+                      }
+                      if (dateA.getTime() > dateB.getTime()) {
+                        return 1;
+                      }
+                      return 0;
+                })
                 : exercise.sets
         }
 

@@ -8,7 +8,8 @@
 
 .exerciseBox {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    width:350px;
+    background-color: #17223b;
+    width:98%;
     padding: 20px;
     h2 {
         text-align: center;
@@ -17,21 +18,26 @@
 
 .exerciseTitle {
     text-align: center;
+    color: antiquewhite;
 }
 
 .exerciseDesc {
     text-align: center;
+    color: antiquewhite;
+    font-size: large;
 }
 
 .exerciseSets {
     text-align: center;
+    color: antiquewhite;
 }
 
 .setBox {
     border: 1px solid black;
+    background-color: #000000;
+    border: 4px solid antiquewhite;
     margin: 10px;
     padding: 10px;
-    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
 
 .setFlex {
@@ -41,22 +47,24 @@
 
 .setDesc {
     flex-grow: 1;
-    border: 1px solid black;
     width: auto;
     padding: 5px;
     margin-right: 5px;
     border-radius: 25px;
-  border: 1px solid #a8a6be;
+  border: 4px solid #a8a6be;
+  color: antiquewhite;
   box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
   font-family: fantasy;
+  font-size: medium;
 }
 
 .setWeight {
     flex-grow: 0;
     font-family: fantasy;
-    border: 1px solid black;
+    border: 4px solid rgb(236, 236, 236);
     padding: 3px;
     border-radius: 25px;
+    color: antiquewhite;
     box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
 
@@ -69,13 +77,13 @@
     margin-right: auto;
     width: 8em;
     border-radius: 25px;
-  border: 1px solid #a8a6be;
+  border: 4px solid #a8a6be;
     padding: 10px;
-    background-color : #ededed;
+    background-color : #17223b;
     font-family : fantasy;
     padding: 10px; text-align: center;
     font-size: 1.2em;
     text-decoration : none;
-    color : #2d2f31;
+    color : antiquewhite;
     box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
