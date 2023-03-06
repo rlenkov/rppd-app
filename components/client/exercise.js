@@ -113,7 +113,7 @@ export const Set = ({ set, refWeight, refWeightName, num, disabled = false }) =>
                                 <p>{`${set.easy_description}`}</p>
                             </div>
                             <div className={styles.setWeight}>
-                                <p>{`${getWeight(set.easy_multiplier)} lb`}</p>
+                                <p>{`${getWeight(set.easy_multiplier)} lb/kg`}</p>
                             </div>
                         </div>
                     </React.Fragment>
