@@ -32,7 +32,7 @@
 .card {
   margin-bottom: 20px;
   position: centre;
-  transform: perspective(400px) rotateX(5deg);
+  z-index: 2;
   width: 60%;
   max-width: 500px;
   background-color: #17223b;
