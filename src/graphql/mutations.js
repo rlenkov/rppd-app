@@ -24,12 +24,15 @@ export const createExercise = /* GraphQL */ `
           createdAt
           updatedAt
           exerciseSetsId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
       workoutExercisesId
+      __typename
     }
   }
 `;
@@ -56,12 +59,15 @@ export const updateExercise = /* GraphQL */ `
           createdAt
           updatedAt
           exerciseSetsId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
       workoutExercisesId
+      __typename
     }
   }
 `;
@@ -88,12 +94,15 @@ export const deleteExercise = /* GraphQL */ `
           createdAt
           updatedAt
           exerciseSetsId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
       workoutExercisesId
+      __typename
     }
   }
 `;
@@ -113,6 +122,7 @@ export const createSet = /* GraphQL */ `
       createdAt
       updatedAt
       exerciseSetsId
+      __typename
     }
   }
 `;
@@ -132,6 +142,7 @@ export const updateSet = /* GraphQL */ `
       createdAt
       updatedAt
       exerciseSetsId
+      __typename
     }
   }
 `;
@@ -151,6 +162,7 @@ export const deleteSet = /* GraphQL */ `
       createdAt
       updatedAt
       exerciseSetsId
+      __typename
     }
   }
 `;
@@ -184,17 +196,22 @@ export const createWorkout = /* GraphQL */ `
               createdAt
               updatedAt
               exerciseSetsId
+              __typename
             }
             nextToken
+            __typename
           }
           createdAt
           updatedAt
           workoutExercisesId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -228,17 +245,22 @@ export const updateWorkout = /* GraphQL */ `
               createdAt
               updatedAt
               exerciseSetsId
+              __typename
             }
             nextToken
+            __typename
           }
           createdAt
           updatedAt
           workoutExercisesId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -272,17 +294,22 @@ export const deleteWorkout = /* GraphQL */ `
               createdAt
               updatedAt
               exerciseSetsId
+              __typename
             }
             nextToken
+            __typename
           }
           createdAt
           updatedAt
           workoutExercisesId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
+      __typename
     }
   }
 `;

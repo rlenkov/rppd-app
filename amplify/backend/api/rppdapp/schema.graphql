@@ -46,3 +46,4 @@ type Workout
     ref_weights: [String]
     exercises: [Exercise] @hasMany
 }
+ 

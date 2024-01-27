@@ -46,5 +46,32 @@
         }
       }
     }
+  },
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-rppdapp-staging-103044-authRole",
+      "UnauthRoleArn": "arn:aws:iam::653182931181:role/amplify-rppdapp-staging-103044-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::653182931181:role/amplify-rppdapp-staging-103044-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-rppdapp-staging-103044-deployment",
+      "UnauthRoleName": "amplify-rppdapp-staging-103044-unauthRole",
+      "StackName": "amplify-rppdapp-staging-103044",
+      "StackId": "arn:aws:cloudformation:eu-central-1:653182931181:stack/amplify-rppdapp-staging-103044/bfa0fec0-bcf6-11ee-b102-0698a23535cf",
+      "AmplifyAppId": "d2n78zkc7povxr"
+    },
+    "categories": {
+      "auth": {
+        "rppdapp8eb422af": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2n78zkc7povxr",
+          "type": "cicd"
+        }
+      },
+      "api": {
+        "rppdapp": {}
+      }
+    }
   }
 }

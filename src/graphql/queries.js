@@ -21,12 +21,15 @@ export const getExercise = /* GraphQL */ `
           createdAt
           updatedAt
           exerciseSetsId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
       workoutExercisesId
+      __typename
     }
   }
 `;
@@ -55,14 +58,18 @@ export const listExercises = /* GraphQL */ `
             createdAt
             updatedAt
             exerciseSetsId
+            __typename
           }
           nextToken
+          __typename
         }
         createdAt
         updatedAt
         workoutExercisesId
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -79,6 +86,7 @@ export const getSet = /* GraphQL */ `
       createdAt
       updatedAt
       exerciseSetsId
+      __typename
     }
   }
 `;
@@ -100,8 +108,10 @@ export const listSets = /* GraphQL */ `
         createdAt
         updatedAt
         exerciseSetsId
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -132,17 +142,22 @@ export const getWorkout = /* GraphQL */ `
               createdAt
               updatedAt
               exerciseSetsId
+              __typename
             }
             nextToken
+            __typename
           }
           createdAt
           updatedAt
           workoutExercisesId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -178,19 +193,25 @@ export const listWorkouts = /* GraphQL */ `
                 createdAt
                 updatedAt
                 exerciseSetsId
+                __typename
               }
               nextToken
+              __typename
             }
             createdAt
             updatedAt
             workoutExercisesId
+            __typename
           }
           nextToken
+          __typename
         }
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
